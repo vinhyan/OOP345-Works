@@ -140,11 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FoodOrder.cpp" />
+    <ClCompile Include="foodorder.cpp" />
     <ClCompile Include="w1_p1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FoodOrder.h" />
+    <ClInclude Include="foodorder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
