@@ -113,4 +113,5 @@ int main (int argc, char* argv[])
 	for (auto i = 0u; i < numDeliveries; ++i)
 		recordedDeliveryOrders[i].display();
 	std::cout << "--------------------\n";
+	return 0;
 }

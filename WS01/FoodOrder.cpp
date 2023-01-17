@@ -5,6 +5,7 @@ Student ID: 171452212
 Date complete: 01/20/2023
 */
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <string>
@@ -15,9 +16,13 @@ using namespace std;
 namespace sdds {
    void FoodOrder::read(std::istream& istr) {
       char special{};
+      string tmp{};
       if (!istr.fail()) {
          istr.getline(m_custName, 10, ',');
-         istr.getline(m_foodDesc, 25, ',');
+         getline(istr, tmp, ',');
+         
+         m_foodDesc = new char[tmp.length() + 1];
+         strcpy(m_foodDesc, tmp.c_str());
          istr >> m_price;
          istr.get();
          istr >> special;
@@ -65,5 +70,10 @@ namespace sdds {
       cout << endl;
       i++;
       
+   }
+   FoodOrder::~FoodOrder() {
+      // NEED A COPY CONSTRUCTOR ??????
+      //m_foodDesc = nullptr;
+      delete [] m_foodDesc;
    }
 }

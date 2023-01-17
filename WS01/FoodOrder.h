@@ -18,12 +18,13 @@ extern double g_dailydiscount;
 namespace sdds {
    class FoodOrder {
       char m_custName[10]{};
-      char m_foodDesc[25]{};
+      char* m_foodDesc{};
       double m_price{};
       bool m_special{};
    public:
       void read(std::istream& istr);
       void display() const;
+      ~FoodOrder();
 
    };
 }
