@@ -14,6 +14,29 @@ Date complete: 01/20/2023
 
 using namespace std;
 namespace sdds {
+   FoodOrder::FoodOrder() {
+      m_custName[0] = '\0';
+      m_foodDesc = nullptr;
+      m_price = 0;
+      m_special = 0;
+   }
+   FoodOrder::FoodOrder(const FoodOrder& F) {
+      *this = F;
+   }
+
+   FoodOrder& FoodOrder::operator=(const FoodOrder& F) {
+      if (this != &F) {
+         if (F.m_custName && F.m_custName[0] != '\0') {
+            strcpy(m_custName, F.m_custName);
+            m_foodDesc = new char[strlen(F.m_foodDesc) + 1];
+            strcpy(m_foodDesc, F.m_foodDesc);
+            m_price = F.m_price;
+            m_special = F.m_special;
+         }
+      }
+      return *this;
+   }
+
    void FoodOrder::read(std::istream& istr) {
       char special{};
       string tmp{};
@@ -71,9 +94,8 @@ namespace sdds {
       i++;
       
    }
+
    FoodOrder::~FoodOrder() {
-      // NEED A COPY CONSTRUCTOR ??????
-      //m_foodDesc = nullptr;
       delete [] m_foodDesc;
    }
 }

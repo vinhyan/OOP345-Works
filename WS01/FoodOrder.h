@@ -22,6 +22,9 @@ namespace sdds {
       double m_price{};
       bool m_special{};
    public:
+      FoodOrder();
+      FoodOrder(const FoodOrder& F);
+      FoodOrder& operator=(const FoodOrder& F);
       void read(std::istream& istr);
       void display() const;
       ~FoodOrder();
