@@ -1,0 +1,19 @@
+/* OOP345 Workshop 1 - Reflection
+Full name: Vinh Nhan
+Email: vnhan1@myseneca.ca
+Student ID: 171452212
+Date complete: 01/20/2023
+*/
+
+
+External linkage is where the variables (with the keyword "extern") are visible in a different scope and different module, whereas internal linkage variables (i.e., static variables) are invisible in other modules but scopes within its module. In this workshop, I have declared 2 extern variables to use throughout the program, in different scopes and different modules:
+
+extern double g_taxrate;
+extern double g_dailydiscount;
+
+On the other hand, I have used a static variable (internal linkage) in display() function to keep track of the count every time the order is displayed. Using a static variable in functions help to store its value without losing it even if the function goes out of scope.
+
+In part 2, m_foodDesc (class FoodOrder’s member variable) has been switched from a C string with an allocated memory of 25 to a dynamically allocated one. Therefore, class FoodOrder will now need rule of 3 (copy constructor, copy assignment and destructor) to handle the dynamically allocated memory of m_foodDesc, so it can store a string of any length. 
+
+
+
