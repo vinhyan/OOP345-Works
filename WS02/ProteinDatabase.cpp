@@ -19,14 +19,13 @@ namespace sdds {
       }
       
       infile.clear();
-      infile.ignore(1000, '\n');
-      infile.close();
+      infile.seekg(0); //read file from beginning
 
       delete[] m_proteinArr;
-      m_proteinArr = new string[cnt];
+      m_proteinArr = nullptr;
 
       if (!infile.fail()) {
-         infile.open(filename);
+         m_proteinArr = new string[cnt];
          while (getline(infile, tmp)) {
             if (tmp[0] != '>') {
                m_proteinArr[m_num_protein - 1] += tmp;
@@ -51,10 +50,15 @@ namespace sdds {
       if (this != &PD) {
          m_num_protein = PD.m_num_protein;
          delete[] m_proteinArr;
-         m_proteinArr = new string[m_num_protein];
-         for (unsigned int i = 0; i < m_num_protein; i++) {
-            m_proteinArr[i] = PD.m_proteinArr[i];
+         m_proteinArr = nullptr;
+
+         if (PD.m_proteinArr) {   // always check src
+            m_proteinArr = new string[m_num_protein];
+            for (unsigned int i = 0; i < m_num_protein; i++) {
+               m_proteinArr[i] = PD.m_proteinArr[i];
+            }
          }
+         
       }
       return *this;
    }
@@ -63,6 +67,9 @@ namespace sdds {
    }
    ProteinDatabase& ProteinDatabase::operator=(ProteinDatabase&& PD) noexcept {
       if (this != &PD) {
+         delete[] m_proteinArr; 
+         m_proteinArr = nullptr; 
+
          m_num_protein = PD.m_num_protein;
          m_proteinArr = PD.m_proteinArr;
          PD.m_num_protein = 0;
