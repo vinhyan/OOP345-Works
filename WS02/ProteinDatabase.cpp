@@ -1,0 +1,79 @@
+//#include <iostream>
+#include <fstream>
+#include "ProteinDatabase.h"
+
+
+
+using namespace std;
+namespace sdds {
+   ProteinDatabase::ProteinDatabase(std::string filename) {
+      std::string tmp;
+      unsigned int cnt{};
+
+      ifstream infile(filename);
+
+      if (infile.is_open()) {
+         while (getline(infile, tmp)) {
+            if (tmp[0] == '>') cnt++;
+         }
+      }
+      
+      infile.clear();
+      infile.ignore(1000, '\n');
+      infile.close();
+
+      delete[] m_proteinArr;
+      m_proteinArr = new string[cnt];
+
+      if (!infile.fail()) {
+         infile.open(filename);
+         while (getline(infile, tmp)) {
+            if (tmp[0] != '>') {
+               m_proteinArr[m_num_protein - 1] += tmp;
+            }
+            else {
+               m_num_protein++;
+            }
+         }
+      }
+   }
+   size_t ProteinDatabase::size() {
+      return m_num_protein;
+   }
+   std::string ProteinDatabase::operator[](size_t i) {
+      string protein{};
+      if (i >= 0 && i < m_num_protein) {
+         protein = m_proteinArr[i];
+      }
+      return protein;
+   }
+   ProteinDatabase& ProteinDatabase::operator=(const ProteinDatabase& PD) {
+      if (this != &PD) {
+         m_num_protein = PD.m_num_protein;
+         delete[] m_proteinArr;
+         m_proteinArr = new string[m_num_protein];
+         for (unsigned int i = 0; i < m_num_protein; i++) {
+            m_proteinArr[i] = PD.m_proteinArr[i];
+         }
+      }
+      return *this;
+   }
+   ProteinDatabase::ProteinDatabase(const ProteinDatabase& PD) {
+      *this = PD;
+   }
+   ProteinDatabase& ProteinDatabase::operator=(ProteinDatabase&& PD) noexcept {
+      if (this != &PD) {
+         m_num_protein = PD.m_num_protein;
+         m_proteinArr = PD.m_proteinArr;
+         PD.m_num_protein = 0;
+         PD.m_proteinArr = nullptr;
+      }
+      return *this;
+   }
+   ProteinDatabase::ProteinDatabase(ProteinDatabase&& PD) noexcept {
+      *this = move(PD);
+   }
+   ProteinDatabase::~ProteinDatabase() {
+      delete[] m_proteinArr;
+   }
+}

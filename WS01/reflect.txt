@@ -13,7 +13,32 @@ extern double g_dailydiscount;
 
 On the other hand, I have used a static variable (internal linkage) in display() function to keep track of the count every time the order is displayed. Using a static variable in functions help to store its value without losing it even if the function goes out of scope.
 
-In part 2, m_foodDesc (class FoodOrder’s member variable) has been switched from a C string with an allocated memory of 25 to a dynamically allocated one. Therefore, class FoodOrder will now need rule of 3 (copy constructor, copy assignment and destructor) to handle the dynamically allocated memory of m_foodDesc, so it can store a string of any length. 
+In part 2, m_foodDesc (class FoodOrder’s member variable) has been switched from a C string with an allocated memory of 25 to a dynamically allocated one. Therefore, class FoodOrder will now need rule of 3 (copy constructor, copy assignment and destructor) to handle the copy from one object to another. 
+
+In addition, read() is now using the "new" keyword to allocate memory to m_foodDesc. The function will store data read from the file to a temporary std::string type (tmp). It will then allocate memory to m_foodDesc according to tmp's length: 
+
+void FoodOrder::read(std::istream& istr) {
+	  ...
+	  
+      string tmp{};
+      if (!istr.fail()) {
+	  
+		 ...
+		 
+         getline(istr, tmp, ','); // read and store data to tmp
+         delete[] m_foodDesc; // make sure m_foodDesc does not have any memory allocated to it 
+         m_foodDesc = new char[tmp.length() + 1]; // allocate memory according to tmp's length
+         strcpy(m_foodDesc, tmp.c_str()); // copy from tmp to m_foodDesc
+         
+		 ...
+      }
+   }
+
+Finally, the destructor will delete the memory allocated to m_foodDesc before the object goes out of scope. This will ensure there is no memory leaking.
+
+FoodOrder::~FoodOrder() {
+      delete [] m_foodDesc;
+   } 
 
 
 

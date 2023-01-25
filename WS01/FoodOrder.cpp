@@ -43,7 +43,7 @@ namespace sdds {
       if (!istr.fail()) {
          istr.getline(m_custName, 10, ',');
          getline(istr, tmp, ',');
-         
+         delete[] m_foodDesc;
          m_foodDesc = new char[tmp.length() + 1];
          strcpy(m_foodDesc, tmp.c_str());
          istr >> m_price;
