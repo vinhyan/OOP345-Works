@@ -1,0 +1,56 @@
+/*
+Full name: Vinh Nhan
+Student ID: 171452212
+OOP345 - Workshop 2 - Reflection
+Date: Jan 27, 2023
+*/
+
+In the last semester, we've learned rule of three in object oriented programming, which enables an object to have a deep copy another object. For this workshop, rule of five has been implemented with the addition of the move constructor and move assignment. While copy constructor and assignment allows deep copy, it also takes a lot of time and memory to perform such task. Specifically, when copying, we will need to allocate new memory to the object, then make sure everything from the source is properly assigned. This can be useful when we actually need to a copy and leave the source as is. However, sometimes we only need to have the data from the source without actually keeping the source object alive, using a move constructor and assignment is more efficient. Specifically, instead of allocating memory and copying everything from the source, a move assignment will make the object point to the address of the source's pointer is pointing to, as well as copy all the data that only need shallow copy, then it will kill all the data from the source.
+
+Example from the code of this workshop:
+
+//Copy assignment:
+  ProteinDatabase& ProteinDatabase::operator=(const ProteinDatabase& PD) {
+      if (this != &PD) {
+         m_num_protein = PD.m_num_protein;
+         delete[] m_proteinArr;
+         m_proteinArr = nullptr;
+
+         if (PD.m_proteinArr) {   // always check source
+            m_proteinArr = new string[m_num_protein];   //allocate new memory
+            for (unsigned int i = 0; i < m_num_protein; i++) {
+               m_proteinArr[i] = PD.m_proteinArr[i];   //copy data one by one from the source
+            }
+         }
+         
+      }
+      return *this;
+   }
+
+//Copy constructor
+   ProteinDatabase::ProteinDatabase(const ProteinDatabase& PD) {
+      *this = PD;
+   }
+
+//Move assignment
+   ProteinDatabase& ProteinDatabase::operator=(ProteinDatabase&& PD) noexcept {
+      if (this != &PD) {
+         
+         delete[] m_proteinArr; 
+         m_proteinArr = nullptr; 
+
+         //move data from the source
+         m_num_protein = PD.m_num_protein;
+         m_proteinArr = PD.m_proteinArr;  //only need to point to the data where the source is pointing to, no need for memory allocation and deep copy
+
+         //kill data from the source
+         PD.m_num_protein = 0;
+         PD.m_proteinArr = nullptr;
+      }
+      return *this;
+   }
+
+//Move constructor
+   ProteinDatabase::ProteinDatabase(ProteinDatabase&& PD) noexcept {
+      *this = move(PD);
+   }

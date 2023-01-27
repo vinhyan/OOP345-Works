@@ -1,3 +1,9 @@
+/*
+Full name: Vinh Nhan
+Student ID: 171452212
+OOP345 - Workshop 2
+Date: Jan 27, 2023
+*/
 #ifndef SDDS_PROTEINDATABASE_H
 #define SDDS_PROTEINDATABASE_H
 

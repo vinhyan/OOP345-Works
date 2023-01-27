@@ -1,3 +1,11 @@
+/*
+Full name: Vinh Nhan
+Student ID: 171452212
+OOP345 - Workshop 2
+Date: Jan 27, 2023
+*/
+
+
 //#include <iostream>
 #include <fstream>
 #include "ProteinDatabase.h"
@@ -67,11 +75,13 @@ namespace sdds {
    }
    ProteinDatabase& ProteinDatabase::operator=(ProteinDatabase&& PD) noexcept {
       if (this != &PD) {
+         //make sure house is empty before moving in furnitures
          delete[] m_proteinArr; 
          m_proteinArr = nullptr; 
-
+         //move furnitures from other house
          m_num_protein = PD.m_num_protein;
          m_proteinArr = PD.m_proteinArr;
+         //make other house empty (of furnitures)
          PD.m_num_protein = 0;
          PD.m_proteinArr = nullptr;
       }
