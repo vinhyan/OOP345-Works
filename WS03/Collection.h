@@ -8,10 +8,10 @@ namespace sdds {
    template <class T, unsigned int CAPACITY>
    class Collection {
       T m_arr[CAPACITY]{};
-      int m_cnt{};
+      unsigned int m_cnt{};
       static T m_dummy;
    public:
-      int size() const {
+      unsigned int size() const {
          return m_cnt;
       }
 
@@ -19,7 +19,7 @@ namespace sdds {
          ostr << "----------------------\n" 
               << "| Collection Content |\n"
               << "----------------------\n";
-         for (int i = 0; i < m_cnt; i++) {
+         for (unsigned int i = 0; i < m_cnt; i++) {
             ostr << m_arr[i] << std::endl;
          }
          ostr << "----------------------\n";
@@ -29,7 +29,7 @@ namespace sdds {
          bool found = false;
          bool success = false;
          if (m_cnt < CAPACITY) {
-            for (int  i = 0; i < m_cnt && !found; i++) {
+            for (unsigned int  i = 0; i < m_cnt && !found; i++) {
                if (&m_arr[i] == &item) found = true;
             }
             if (!found) {
@@ -41,7 +41,7 @@ namespace sdds {
          return success;
       }
 
-      T& operator[](int idx) {
+      T& operator[](unsigned int idx) {
          return idx < m_cnt ? m_arr[idx] : m_dummy;
       }
 
