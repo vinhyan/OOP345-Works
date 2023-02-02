@@ -16,34 +16,30 @@ namespace sdds {
       }
 
       void display(std::ostream& ostr = std::cout) const {
-         ostr << "----------------------\n" 
-              << "| Collection Content |\n"
-              << "----------------------\n";
+         ostr << "----------------------\n"
+            << "| Collection Content |\n"
+            << "----------------------\n";
          for (unsigned int i = 0; i < m_cnt; i++) {
             ostr << m_arr[i] << std::endl;
          }
          ostr << "----------------------\n";
       }
 
-      bool add(const T& item) {
-         bool found = false;
+      virtual bool add(const T& item) {
          bool success = false;
          if (m_cnt < CAPACITY) {
-            for (unsigned int  i = 0; i < m_cnt && !found; i++) {
-               if (&m_arr[i] == &item) found = true;
-            }
-            if (!found) {
-               m_arr[m_cnt] = item;
-               m_cnt++;
-               success = true;
-            }
+            m_arr[m_cnt] = item;
+            m_cnt++;
+            success = true;
          }
          return success;
       }
 
       T& operator[](unsigned int idx) {
-         return idx < m_cnt ? m_arr[idx] : m_dummy;
+         return (idx >= 0 && idx < m_cnt) ? m_arr[idx] : m_dummy;
       }
+
+      ~Collection() {};
 
    };
    //initalize static variable member

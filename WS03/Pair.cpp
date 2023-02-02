@@ -8,6 +8,9 @@ namespace sdds {
       ostr << setw(20) << right << m_key << ": " << left << m_value;
       return ostr;
    }
+   bool Pair::operator==(const Pair& P) {
+      return m_key == P.m_key;
+   }
    std::ostream& operator<<(std::ostream& ostr, const Pair& pair) {
       return pair.display(ostr);
    }

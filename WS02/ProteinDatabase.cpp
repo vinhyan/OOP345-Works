@@ -16,7 +16,7 @@ using namespace std;
 namespace sdds {
    ProteinDatabase::ProteinDatabase(std::string filename) {
       std::string tmp;
-      unsigned int cnt{};
+      unsigned int cnt = 0;
 
       ifstream infile(filename);
 
