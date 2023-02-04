@@ -27,6 +27,7 @@ namespace sdds {
 		Pair() {};
 		std::ostream& display(std::ostream& ostr) const;
 		bool operator==(const Pair& P);
+		~Pair() {};
 	};
 
 

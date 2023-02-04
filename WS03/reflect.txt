@@ -1,0 +1,53 @@
+/*
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 3 - Reflection
+Date complete: February 3, 2023
+*/
+
+
+A class template is not an actual class, which means the class definition will not be defined until an object of that class is created. Hence, the compiler will need to know the definition of the class (not class template) when compiling the source code (.cpp file).
+In the class template Collection, a class (static) variable m_dummy is created so that it can be returned when the user accesses a non-existent member of the m_arr using array index operator[]. Additionally, any static member variable in a class will need to be declared outside of the class. This is because every time an object of that class is created, the value of the static member variable will still live. 
+template<>
+   Pair Collection<Pair, 100>::m_dummy("No Key", "No Value");
+Therefore, it needs to be initialized a value outside of the class right before any object is created.
+In the Pair module, there are a default constructor and 3 functions that need to be added to make the program work as desired. Specifically, a default constructor is necessary when an instance of the class is created (without any arguments). Furthermore, since a Pair is not of any primitive data type, in order to compare them, it needs an == operator overload which compares the key value (m_key) of the two pairs in this case.
+bool Pair::operator==(const Pair& P) {
+      return m_key == P.m_key;
+   }
+Lastly, a display() in Pair class to output the value to ostream and an extraction operator overload to make sure “<<” can be used to display Pair
+bool Pair::operator==(const Pair& P) {
+      return m_key == P.m_key;
+   }
+   std::ostream& operator<<(std::ostream& ostr, const Pair& pair) {
+      return pair.display(ostr);
+   }
+
+In this workshop, the add() function will check if the adding item has the same value as any member of the array (m_arr[]); if it does, the function will not proceed adding. In part 2, it is asking if the absolute value of the difference of the two items (double/float) are equal to or less than 0.01, then they are considered to be equal. That being said, the original add() will not be able to accomplish this as its logic is to only check if the two items are strictly equal. Therefore, we need to specialize this function so that it tailors to this specific condition as well as data type (double, in this case). 
+Original add() from class template Set:
+bool add(const T& item) {
+         bool found = false;
+         bool success = false;
+         for (unsigned int i = 0; i < this->size() && !found; i++) {
+            if ((*this)[i] == item) found = true;
+         }
+
+         if (!found) {
+            success = Collection<T, 100>::add(item);
+         }
+         return success;
+      }
+Specialized add():
+template<>
+   inline bool Set<double>::add(const double& item) {
+      bool found = false;
+      bool success = false;
+      for (unsigned int i = 0; i < this->size() && !found; i++) {
+         if (std::fabs((*this)[i] - item) <= 0.01) found = true;
+      }
+
+      if (!found) {
+         success = Collection<double, 100>::add(item);
+      }
+      return success;
+   }
