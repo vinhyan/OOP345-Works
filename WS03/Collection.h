@@ -47,7 +47,7 @@ namespace sdds {
          return (idx >= 0 && idx < m_cnt) ? m_arr[idx] : m_dummy;
       }
 
-      ~Collection() {};
+      virtual ~Collection() {};
 
    };
    //initalize static variable member
