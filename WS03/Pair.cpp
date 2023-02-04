@@ -1,3 +1,10 @@
+/*
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 3
+Date complete: February 3, 2023
+*/
+
 #include <iomanip>
 #include "Pair.h"
 

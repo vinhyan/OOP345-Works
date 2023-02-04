@@ -1,3 +1,9 @@
+/*
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 3
+Date complete: February 3, 2023
+*/
 #ifndef SDDS_SET_H
 #define SDDS_SET_H
 
