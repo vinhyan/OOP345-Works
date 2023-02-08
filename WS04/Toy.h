@@ -1,3 +1,9 @@
+/*
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 4
+Date complete: Feb 11, 2023
+*/
 #ifndef SDDS_TOY_H
 #define SDDS_TOY_H
 
@@ -16,6 +22,7 @@ namespace sdds {
       void update(int numItems);
       Toy(const std::string& toy);
       std::ostream& display(std::ostream& ostr) const;
+      ~Toy();
    };
    void extractToken(std::string& str, std::string& token, char delim);
    void extractToken(std::string& str, unsigned int& token, char delim);
