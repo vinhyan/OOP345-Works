@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": ["proteinsequences.txt"],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/Users/vinhnhan/Library/CloudStorage/OneDrive-Seneca/SEM3/OOP345/OOP345-Works/WS02",
+      "program": "/Users/vinhnhan/Library/CloudStorage/OneDrive-Seneca/SEM3/OOP345/OOP345-Works/WS02/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
