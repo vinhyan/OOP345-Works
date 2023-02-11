@@ -93,7 +93,7 @@ namespace sdds {
             for (; i < m_cnt-1; i++) {
                m_toys[i - 1] = m_toys[i];
             }
-            tmp = new const Toy * [m_cnt--];
+            tmp = new const Toy * [--m_cnt];
             for (size_t j = 0; j < m_cnt; j++) {
                tmp[j] = m_toys[j];
             }
