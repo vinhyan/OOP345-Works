@@ -19,7 +19,7 @@ namespace sdds {
          m_toys = new const Toy * [m_cnt];
          for (size_t i = 0; i < m_cnt; i++) {
             //second layer DMA
-            m_toys[i] = new Toy(*toys[i]);
+            m_toys[i] = new Toy(*(toys[i]));
          }
       }
    }
@@ -34,20 +34,23 @@ namespace sdds {
 
    Child& Child::operator=(const Child& C) {
       if (this != &C) {
-         if (!C.m_name.empty()) {
-            m_name = C.m_name;
-            m_age = C.m_age;
-            m_cnt = C.m_cnt;
+         //loop to deallocate TOYSSSS
+         for (size_t i = 0; i < m_cnt; i++) {
+            delete m_toys[i];
+            m_toys[i] = nullptr;
+         }
 
-            delete[] m_toys;
-            m_toys = nullptr;
+         delete[] m_toys;
+         m_toys = nullptr;
 
-            if (C.m_toys != nullptr) {
-               m_toys = new const Toy * [m_cnt];
-               for (size_t i = 0; i < m_cnt; i++) {
-                  //delete m_toys[i]; ---------------> why do I not need to delete memory here?
-                  m_toys[i] = new Toy(*C.m_toys[i]);
-               }
+         m_name = C.m_name;
+         m_age = C.m_age;
+         m_cnt = C.m_cnt;
+
+         if (C.m_toys != nullptr) {
+            m_toys = new const Toy * [m_cnt];
+            for (size_t i = 0; i < m_cnt; i++) {
+               m_toys[i] = new Toy(*C.m_toys[i]);
             }
          }
       }
@@ -60,35 +63,24 @@ namespace sdds {
 
    Child& Child::operator=(Child&& C) noexcept {
       if (this != &C) {
-         if (!C.m_name.empty()) {
+         for (size_t i = 0; i < m_cnt; i++) {
+            delete m_toys[i];
+            m_toys[i] = nullptr;
+         }
+         delete[] m_toys;
+         m_toys = nullptr;
+
+         if (C.m_toys) {
             m_name = C.m_name;
             m_age = C.m_age;
             m_cnt = C.m_cnt;
-
-            //for (size_t i = 0; i < m_cnt; i++) { -----------> why no need to delete memory of each pointer in the array?
-            //   delete m_toys[i];
-            //}
-            
-           /* for (size_t i = 0; i < m_cnt; i++) {
-               delete m_toys[i];
-            }*/
-            delete[] m_toys;
             m_toys = C.m_toys;
-            //for (size_t i = 0; i < m_cnt; i++) {
-            //   /*delete[] m_toys[i];*/
-            //   m_toys[i] = C.m_toys[i];
-            //}
-            /*m_toys = C.m_toys;*/
-
-            C.m_name = "";
-            C.m_age = 0;
-            C.m_cnt = 0;
-            //make all members of src nullptr too??
-            /*for (size_t i = 0; i < m_cnt; i++) { ----------> why do we not need to make each pointer in the array nullptr ??
-               like this: C.m_toys[i] = nullptr;
-            }*/
-            C.m_toys = nullptr;
          }
+         
+         C.m_name = "";
+         C.m_age = 0;
+         C.m_cnt = 0;
+         C.m_toys = nullptr;
       }
       return *this;
    }
