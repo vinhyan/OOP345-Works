@@ -80,9 +80,14 @@ namespace sdds {
    }
 
    void trim(std::string& str) {
-      while (isspace(str[0])) str.erase(0, 1);
-      while (isspace(str[str.length() - 1])) str.erase(str.length() - 1);
+      size_t firstPos = str.find_first_not_of(' ');
+      str.erase(0, firstPos);
+      size_t lastPos = str.find_last_not_of(' ');
+      str.erase(lastPos + 1);
    }
+
+
+
 
    std::ostream& operator<<(std::ostream& ostr, const Toy& toy) {
       return toy.display(ostr);

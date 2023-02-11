@@ -16,12 +16,14 @@ namespace sdds {
       std::string m_name{};
       unsigned int m_numItems{};
       double m_price{};
+      //taxamount ?? not necessary
 
    public:
       Toy();
       void update(int numItems);
       Toy(const std::string& toy);
       std::ostream& display(std::ostream& ostr) const;
+
       ~Toy();
    };
    void extractToken(std::string& str, std::string& token, char delim);

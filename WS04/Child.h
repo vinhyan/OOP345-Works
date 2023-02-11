@@ -16,7 +16,7 @@ namespace sdds {
    class Child {
       std::string m_name{};
       int m_age{};
-      const Toy** m_toys{};
+      const Toy** m_toys{}; // composition relationship. child owns toys 
       size_t m_cnt{};
    public:
       Child();
@@ -24,14 +24,14 @@ namespace sdds {
       size_t size() const;
       Child(const Child& C);
       Child& operator=(const Child& C);
-      Child(Child&& C);
-      Child& operator=(Child&& C);
+      Child(Child&& C) noexcept;
+      Child& operator=(Child&& C) noexcept;
       std::ostream& display(std::ostream& ostr) const;
       ~Child();
 
    };
 
-
+   std::ostream& operator<<(std::ostream& ostr, const Child& C);
 
 }
 
