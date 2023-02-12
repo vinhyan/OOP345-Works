@@ -11,10 +11,6 @@ namespace sdds {
    Child::Child() {}
 
    Child::Child(std::string name, int age, const Toy* toys[], size_t count) : m_name(name), m_age(age), m_cnt(count) {
-      /* No need since this is a constructor, no previous data)
-      delete[] m_toys;
-      m_toys = nullptr;*/
-
       if (toys != nullptr) { 
          m_toys = new const Toy * [m_cnt];
          for (size_t i = 0; i < m_cnt; i++) {
@@ -34,20 +30,19 @@ namespace sdds {
 
    Child& Child::operator=(const Child& C) {
       if (this != &C) {
-         //loop to deallocate TOYSSSS
+         //remove memory of 2 layers from the current obj 
          for (size_t i = 0; i < m_cnt; i++) {
             delete m_toys[i];
             m_toys[i] = nullptr;
          }
-
          delete[] m_toys;
          m_toys = nullptr;
 
-         m_name = C.m_name;
-         m_age = C.m_age;
-         m_cnt = C.m_cnt;
-
-         if (C.m_toys != nullptr) {
+         //copy data from src to the current obj (deep copy)
+         if (C.m_toys) {
+            m_name = C.m_name;
+            m_age = C.m_age;
+            m_cnt = C.m_cnt;
             m_toys = new const Toy * [m_cnt];
             for (size_t i = 0; i < m_cnt; i++) {
                m_toys[i] = new Toy(*C.m_toys[i]);
@@ -63,6 +58,7 @@ namespace sdds {
 
    Child& Child::operator=(Child&& C) noexcept {
       if (this != &C) {
+         //remove memory of 2 layers from the current obj 
          for (size_t i = 0; i < m_cnt; i++) {
             delete m_toys[i];
             m_toys[i] = nullptr;
@@ -70,6 +66,7 @@ namespace sdds {
          delete[] m_toys;
          m_toys = nullptr;
 
+         //copy data from src to the current obj
          if (C.m_toys) {
             m_name = C.m_name;
             m_age = C.m_age;
@@ -77,6 +74,7 @@ namespace sdds {
             m_toys = C.m_toys;
          }
          
+         //set data from src to 0
          C.m_name = "";
          C.m_age = 0;
          C.m_cnt = 0;

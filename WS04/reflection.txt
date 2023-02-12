@@ -1,0 +1,120 @@
+*****************************
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 4 - Reflection
+*****************************
+
+One of the difficulties I encountered when working on this workshop is implementing the logic of the move assignment in class Child. Specifically, when moving data from the source to the current object, the memory of the current object should first be deallocated, then data from the source will be copied to the current object before remove them. However, I copied the data from source before deallocating, causing error when deleting the memory of the current object using data (m_cnt) from source. Code example:
+
+The incorrect way:
+Child& Child::operator=(Child&& C) noexcept {
+      if (this != &C) {
+		//copy data from src to the current obj
+		m_name = C.m_name;
+        m_age = C.m_age;
+        m_cnt = C.m_cnt;   //***problematic, causes error
+		
+         //remove memory of 2 layers from the current obj 
+         for (size_t i = 0; i < m_cnt; i++) {  //***using m_cnt from src
+            delete m_toys[i];
+            m_toys[i] = nullptr;
+         }
+         delete[] m_toys;
+         m_toys = nullptr;
+		 
+		 //make current array point to src
+         if (C.m_toys) {
+            m_toys = C.m_toys;
+         }
+         
+         //set data from src to 0
+         C.m_name = "";
+         C.m_age = 0;
+         C.m_cnt = 0;
+         C.m_toys = nullptr;
+      }
+      return *this;
+   }
+
+The correct way:
+Child& Child::operator=(Child&& C) noexcept {
+      if (this != &C) {
+         //remove memory of 2 layers from the current obj 
+         for (size_t i = 0; i < m_cnt; i++) {
+            delete m_toys[i];
+            m_toys[i] = nullptr;
+         }
+         delete[] m_toys;
+         m_toys = nullptr;
+
+         //copy data from src to the current obj
+         if (C.m_toys) {
+            m_name = C.m_name;
+            m_age = C.m_age;
+            m_cnt = C.m_cnt;
+            m_toys = C.m_toys;
+         }
+         
+         //set data from src to 0
+         C.m_name = "";
+         C.m_age = 0;
+         C.m_cnt = 0;
+         C.m_toys = nullptr;
+      }
+      return *this;
+   }
+
+The relationship between Child and Toy is composition. Each Child owns Toy and is responsible for creating Toy object(s) in its constructor:
+Child(std::string name, int age, const Toy* toys[], size_t count)
+Additionally, when copying or moving a Child object, it also deletes the current Toy object and makes a new one. The Child class will delete Toy objects in its destructor when the object goes out of scope.
+Likewise, the relationship of Child and the array of pointers m_toys is composition, as it implements the same rule as mentioned above with Toy. The code belows show the implementation of a Child constructor and destructor:
+
+//Constructor
+Child::Child(std::string name, int age, const Toy* toys[], size_t count) : m_name(name), m_age(age), m_cnt(count) {
+  if (toys != nullptr) { 
+	 m_toys = new const Toy * [m_cnt];  //allocate memory to array of pointer m_toys
+	 for (size_t i = 0; i < m_cnt; i++) {
+		//second layer DMA
+		m_toys[i] = new Toy(*(toys[i])); //allocate memory to each pointer in the array, pointing to a Toy object
+	 }
+  }
+}
+
+//Destructor
+Child::~Child() {
+  //delete 2 layers
+  for (size_t i = 0; i < m_cnt; i++) {
+	 delete m_toys[i];  //destroy each toy object
+  }
+  delete[] m_toys;  //destroy the array of pointers
+}
+
+On the other hand, ConfirmOrder and Toy hold a aggregration relationship. This means ConfirmOrder will not be responsible for creating and destroying any Toy object.
+However, ConfirmOrder and the array of pointer m_toys have a composition relationship. New memory is allocated when copying/moving a ConfirmOrder object or when adding/removing a Toy using +=/-= operator. The m_toys array gets deleted when the object goes out of scope. 
+
+//Copy assignment (no Toy object is being created)
+ConfirmOrder& ConfirmOrder::operator=(const ConfirmOrder& CO) {
+      if (this != &CO) {
+         //remove memory from current obj
+         delete[] m_toys;   //deallocate m_toys
+         m_toys = nullptr;
+
+         //copy data from src (deep copy)
+         m_cnt = CO.m_cnt;
+         if (CO.m_toys != nullptr) {
+            m_toys = new const Toy * [m_cnt];  //allocate memory for m_toys
+            for (size_t i = 0; i < m_cnt; i++) {
+               m_toys[i] = CO.m_toys[i];
+            }
+         }
+      }
+      return *this;
+   }
+
+//Destructor
+ ConfirmOrder::~ConfirmOrder() {
+      delete[] m_toys;  //deallocate m_toys
+   }
+
+In conclusion, the difference of the implementation between a composition and aggregration class is that the former is reponsible for creating and destroying the component class while the latter is not. It is demonstrated in move and copy assignment when new object of the component class is created for composition relationship while no object of component class need to be created for aggregation relationship.
+
