@@ -30,7 +30,7 @@ namespace sdds {
       double subtotal = m_price * m_numItems;
       double taxAmount = subtotal * 0.13;
       
-      ostr << "Toy" << setw(8) << m_orderID << ": " 
+      ostr << "Toy" << setw(8) << m_orderID << ":" 
            << setw(18) << right << m_name
            << setw(3) << m_numItems << " items" 
            << setw(8) << m_price << "/item "; 
