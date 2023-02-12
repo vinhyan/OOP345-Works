@@ -13,7 +13,7 @@ Date complete: Feb 11, 2023
 
 namespace sdds {
    class ConfirmOrder {
-      const Toy** m_toys{};   // Aggregration relationship
+      const Toy** m_toys{};   // Aggregration relationship with Toy, but composition with m_toys
       size_t m_cnt{};
    public:
       ConfirmOrder();

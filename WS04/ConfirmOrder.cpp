@@ -87,7 +87,7 @@ namespace sdds {
             found = m_toys[i] == &toy;
          }
          if (found) {  //only remove if exists
-            for (; i < m_cnt-1; i++) {  //remove by shifting elements up from the found toy
+            for (; i < m_cnt; i++) {  //remove by shifting elements up from the found toy
                m_toys[i - 1] = m_toys[i];
             }
             tmp = new const Toy * [--m_cnt];  //tmp with new memory
