@@ -24,7 +24,14 @@ namespace sdds {
 
    };
 
+   //helper functions
+
    std::ostream& operator<<(std::ostream& ostr, const Book& book);
+
+   void extractToken(std::string& str, std::string& token, char delim);
+   void extractToken(std::string& str, size_t& token, char delim);
+   void extractToken(std::string& str, double& token, char delim);
+   void trim(std::string& str);
 
 
 
