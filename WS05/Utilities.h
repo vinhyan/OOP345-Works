@@ -1,5 +1,5 @@
-#ifndef SDDS_UTILS_H
-#define SDDS_UTILS_H
+#ifndef SDDS_UTILITIES_H
+#define SDDS_UTILITIES_H
 
 
 #include <string>
@@ -15,4 +15,4 @@ namespace sdds {
 
 
 }
-#endif // !SDDS_UTILS_H
+#endif // !SDDS_UTILITIES_H
