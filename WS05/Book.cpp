@@ -32,9 +32,18 @@ namespace sdds {
       ostr << setw(20) << right << m_author << " | "
            << setw(22) << right << m_title <<  " | "
            << setw(5)  << right << m_pubCountry << " | "
-           << setw(4)  << m_pubYear << " | "
-           << setw(6)  << right << m_price << endl;
+           << setw(4)  << m_pubYear << " | ";
+      ostr.setf(ios::fixed);
+      ostr.precision(2);
+      ostr << setw(6)  << right << m_price << " | "
+           << m_desc << endl;
+      return ostr;
+   }
 
+   Book::~Book() {}
+
+   std::ostream& operator<<(std::ostream& ostr, const Book& book) {
+      return book.display(ostr);
    }
 
 }

@@ -1,5 +1,5 @@
 #ifndef SDDS_BOOK_H
-#define SDDS_BOOK
+#define SDDS_BOOK_H
 
 #include <iostream>
 #include <string>
@@ -20,7 +20,11 @@ namespace sdds {
       double& price();
       Book(const std::string& strBook);
       std::ostream& display(std::ostream& ostr) const;
+      ~Book();
+
    };
+
+   std::ostream& operator<<(std::ostream& ostr, const Book& book);
 
 
 

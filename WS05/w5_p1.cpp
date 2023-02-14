@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <string>
 #include "Book.h"
 #include "Book.h"
 
@@ -20,6 +21,7 @@ enum AppErrors
 // ws books.txt
 int main(int argc, char** argv)
 {
+	
 	std::cout << "Command Line:\n";
 	std::cout << "--------------------------\n";
 	for (int i = 0; i < argc; i++)
@@ -35,6 +37,28 @@ int main(int argc, char** argv)
 		//       - lines that start with "#" are considered comments and should be ignored
 		//       - if the file cannot be open, print a message to standard error console and
 		//                exit from application with error code "AppErrors::CannotOpenFile"
+
+		std::ifstream inf(argv[1]);
+		std::string str{};
+		int cnt{};
+
+		sdds::Book* tmpBook{};
+
+		if (inf) {
+			do {
+				std::getline(inf, str);
+				if (str[0] != '#') {
+					tmpBook = new sdds::Book(str);
+					library[cnt] = *tmpBook;  
+					cnt++;
+				}
+			} while (inf && cnt < 7);
+			delete tmpBook;
+		}
+		else {
+			std::cerr << "ERROR: Cannot open file!\n";
+			exit(AppErrors::CannotOpenFile);
+		}
 	}
 	else
 	{
@@ -51,14 +75,23 @@ int main(int argc, char** argv)
 	//            and save the new price in the book object
 	//       - if the book was published in UK between 1990 and 1999 (inclussive),
 	//            multiply the price with "gbpToCadRate" and save the new price in the book object
-
+	auto adjustPrice = [usdToCadRate, gbpToCadRate](sdds::Book& book) {
+		if (book.country() == "US") {
+			book.price() *= usdToCadRate;
+		}
+		else if (book.year() >= 1990 && book.year() <= 1999) {
+			book.price() *= gbpToCadRate;
+		}
+	};
 
 
 	std::cout << "-----------------------------------------\n";
 	std::cout << "The library content\n";
 	std::cout << "-----------------------------------------\n";
 	// TODO: iterate over the library and print each book to the screen
-
+	for (auto& book : library) {
+		std::cout << book;
+	}
 
 
 	std::cout << "-----------------------------------------\n\n";
@@ -66,16 +99,22 @@ int main(int argc, char** argv)
 	// TODO: iterate over the library and update the price of each book
 	//         using the lambda defined above.
 
-
+	for (auto& book : library) {
+		adjustPrice(book);
+	}
 
 	std::cout << "-----------------------------------------\n";
 	std::cout << "The library content (updated prices)\n";
 	std::cout << "-----------------------------------------\n";
 	// TODO: iterate over the library and print each book to the screen
-
+	for (auto& book : library) {
+		std::cout << book;
+	}
 
 
 	std::cout << "-----------------------------------------\n";
+
+	
 
 	return 0;
 }
