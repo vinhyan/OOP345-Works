@@ -51,9 +51,10 @@ int main(int argc, char** argv)
 					tmpBook = new sdds::Book(str);
 					library[cnt] = *tmpBook;  
 					cnt++;
+					delete tmpBook;
 				}
 			} while (inf && cnt < 7);
-			delete tmpBook;
+			
 		}
 		else {
 			std::cerr << "ERROR: Cannot open file!\n";
