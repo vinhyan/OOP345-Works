@@ -9,7 +9,7 @@ namespace sdds {
       std::string m_author{};
       std::string m_title{};
       std::string m_pubCountry{};
-      unsigned int m_pubYear{};
+      size_t m_pubYear{};
       double m_price{};
       std::string m_desc{};
    public:

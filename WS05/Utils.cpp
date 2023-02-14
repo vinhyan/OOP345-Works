@@ -17,7 +17,7 @@ namespace sdds {
       }
    }
 
-   void extractToken(std::string& str, unsigned int& token, char delim) {
+   void extractToken(std::string& str, size_t& token, char delim) {
       size_t pos = str.find(delim);
       if (pos == string::npos) {
          token = stoi(str);
