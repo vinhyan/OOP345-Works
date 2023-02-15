@@ -1,6 +1,7 @@
 #ifndef SDDS_COLLECTION_H
 #define SDDS_COLLECTION_H
 
+#include <stdexcept>
 #include <string>
 
 namespace sdds {
@@ -56,27 +57,18 @@ namespace sdds {
 
       T& operator[](size_t idx) const {
          if (!(idx >= 0 && idx < m_size)) {
-            throw std::out_of_range("Bad index [" + std::to_string(idx) + "]. Collection jas [" + std::to_string(m_size) + "] items.");
+            throw std::out_of_range("Bad index [" + std::to_string(idx) + "]. Collection has [" + std::to_string(m_size) + "] items.");
          }
          return m_collection[idx];
       }
 
       T* operator[](const std::string& title) const {
          bool found{};
-         T* item{};
          size_t i{};
          for (; i < m_size && !found; i++) {
             found = m_collection[i].title() == title;
          }
-
-         if (found) {
-            item = &m_collection[i - 1];
-         }
-         else {
-            item = nullptr;
-         }
-
-         return item;
+         return found ? &m_collection[i -1] : nullptr;
       }
 
       std::ostream& display(std::ostream& ostr) const {
