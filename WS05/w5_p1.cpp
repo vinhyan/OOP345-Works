@@ -3,6 +3,13 @@
 // 2021/01/19 - Chris
 // 2021/02/12 - Cornel
 
+/*
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 5
+Complete date: Feb 19, 2023
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
