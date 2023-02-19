@@ -20,6 +20,12 @@ namespace sdds {
             getline(inf, str);
             m_badWords[i] = str.substr(0, str.find_first_of(" \f\n\r\t\v"));
             m_goodWords[i] = str.substr(str.find_last_of(" \f\n\r\t\v") + 1);
+          /*  if (!(i % 2)) {
+               getline(inf, m_badWords[i]);
+            }
+            else {
+               getline(inf, m_goodWords[i]);
+            }*/
          }
       }
       else {

@@ -178,7 +178,7 @@ int main(int argc, char** argv)
 				}
 			} while (inf && cnt < 5);
 
-			if (!inf) inf.clear();
+			if (!inf) inf.clear(); // necessary if we're closing the file right after?
 			inf.close();
 		}
 		else {

@@ -1,3 +1,10 @@
+/*
+Student name: Vinh Nhan
+Student ID: 171452212
+OOP345 Workshop 5
+Complete date: Feb 19, 2023
+*/
+
 #ifndef SDDS_COLLECTION_H
 #define SDDS_COLLECTION_H
 
@@ -10,13 +17,11 @@ namespace sdds {
       std::string m_name;
       T* m_collection;
       size_t m_size;
-      T* m_dummy;
       void (*m_observer)(const Collection<T>&, const T&) {};
    public:
       Collection(const std::string& name) : m_name(name) {
          m_collection = nullptr;
          m_size = 0;
-         m_dummy = nullptr;
       }
 
       const std::string& name() const {
@@ -47,7 +52,7 @@ namespace sdds {
                }
             }            
             tmp[m_size - 1] = item;
-            delete[] m_collection; // might cause mem leak ??
+            delete[] m_collection; 
             m_collection = tmp;
 
             if (m_observer) m_observer(*this, item);
@@ -68,7 +73,7 @@ namespace sdds {
          for (; i < m_size && !found; i++) {
             found = m_collection[i].title() == title;
          }
-         return found ? &m_collection[i -1] : nullptr;
+         return found ? &m_collection[i - 1] : nullptr;
       }
 
       std::ostream& display(std::ostream& ostr) const {

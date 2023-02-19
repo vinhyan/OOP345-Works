@@ -31,7 +31,7 @@ namespace sdds {
       extractToken(str, m_pubCountry, ',');
       extractToken(str, m_price, ',');
       extractToken(str, m_pubYear, ',');
-      extractToken(str, m_desc, '\n');  // what could be the default delimeter?
+      extractToken(str, m_desc, '\n'); 
    }
 
    std::ostream& Book::display(std::ostream& ostr) const {
