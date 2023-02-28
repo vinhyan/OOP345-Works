@@ -12,6 +12,8 @@ Date complete: 01/20/2023
 #include "foodorder.h"
 
 
+double g_taxrate{};
+double g_dailydiscount{};
 using namespace std;
 namespace sdds {
    FoodOrder::FoodOrder() {
@@ -28,6 +30,7 @@ namespace sdds {
       if (this != &F) {
          if (F.m_custName && F.m_custName[0] != '\0') {
             strcpy(m_custName, F.m_custName);
+            delete[] m_foodDesc;
             m_foodDesc = new char[strlen(F.m_foodDesc) + 1];
             strcpy(m_foodDesc, F.m_foodDesc);
             m_price = F.m_price;

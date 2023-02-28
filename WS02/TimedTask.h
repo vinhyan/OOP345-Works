@@ -29,9 +29,9 @@ namespace sdds {
       void stopClock();
       void addTask(const char* task);
       unsigned int size()const;
-      void display(std::ostream& ostr);
+      void display(std::ostream& ostr) const;
 
-      friend std::ostream& operator<<(std::ostream& ostr, TimedTask& record);
+      friend std::ostream& operator<<(std::ostream& ostr, const TimedTask& record);
    };
 
    

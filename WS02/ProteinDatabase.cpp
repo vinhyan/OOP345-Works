@@ -47,7 +47,7 @@ namespace sdds {
    size_t ProteinDatabase::size() {
       return m_num_protein;
    }
-   std::string ProteinDatabase::operator[](size_t i) {
+   std::string ProteinDatabase::operator[](size_t i) const {
       string protein{};
       if (i >= 0 && i < m_num_protein) {
          protein = m_proteinArr[i];

@@ -12,9 +12,9 @@ Date complete: 01/20/2023
 
 #include <iostream>
 
+
 extern double g_taxrate;
 extern double g_dailydiscount;
-
 namespace sdds {
    class FoodOrder {
       char m_custName[10]{};

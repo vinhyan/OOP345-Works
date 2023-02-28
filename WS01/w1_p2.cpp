@@ -18,8 +18,7 @@
 	Y - Is a daily special
 	N - Is not a daily special
 */
-double g_taxrate{};
-double g_dailydiscount{};
+
 
 // TODO: write the prototype for the main function
 //         to accept command line arguments

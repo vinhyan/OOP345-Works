@@ -29,14 +29,14 @@ namespace sdds {
       return m_cnt;
    }
 
-   void TimedTask::display(std::ostream& ostr) {
+   void TimedTask::display(std::ostream& ostr) const {
       for (unsigned int i = 0; i < m_cnt; i++) {
          ostr << left  << setw(21) << m_tasks[i].m_name << " " 
               << right << setw(13) << m_tasks[i].m_duration.count() << " " 
               << m_tasks[i].m_time_unit << endl;
       }
    }
-   std::ostream& operator<<(std::ostream& ostr,  TimedTask& record) {
+   std::ostream& operator<<(std::ostream& ostr, const TimedTask& record) {
       ostr << "--------------------------" << endl
            << "Execution Times:" << endl
            << "--------------------------" << endl;
