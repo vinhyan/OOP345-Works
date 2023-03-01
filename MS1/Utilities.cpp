@@ -1,7 +1,7 @@
 // Name: Vinh Nhan
 // Seneca Student ID: 171452212
 // Seneca email: vnhan1@myseneca.ca
-// Date of completion: 
+// Date of completion: Mar 1, 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -58,9 +58,6 @@ namespace sdds {
    char Utilities::getDelimiter() {
       return m_delimiter;
    }
-
-
-
 
    void trim(std::string& str) {
       size_t firstPos = str.find_first_not_of(" \f\n\r\t\v");

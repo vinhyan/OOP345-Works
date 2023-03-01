@@ -1,7 +1,7 @@
 // Name: Vinh Nhan
 // Seneca Student ID: 171452212
 // Seneca email: vnhan1@myseneca.ca
-// Date of completion: 
+// Date of completion: Mar 1, 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -22,7 +22,7 @@ namespace sdds {
       m_itemName = util.extractToken(record, next_pos, more);
       m_serialNum = stoi(util.extractToken(record, next_pos, more));
       m_availQty = stoi(util.extractToken(record, next_pos, more));
-      m_widthField += util.getFieldWidth();
+      if (m_widthField < util.getFieldWidth()) m_widthField = util.getFieldWidth();
       m_desc = util.extractToken(record, next_pos, more);
       m_id = ++m_id_generator;
 
@@ -42,9 +42,9 @@ namespace sdds {
       if (m_availQty > 0) m_availQty--;
    }
    void Station::display(std::ostream& os, bool full) const {
-      os << std::setfill('0') << std::setw(3)  << m_id << " | " << std::setfill(' ')  << m_itemName << std::setw(m_widthField) << " | " << std::setw(6) << std::setfill('0') << m_serialNum << " | ";
+      os << std::setfill('0') << std::setw(3)  << m_id << " | " << std::setfill(' ') << std::setw(m_widthField + 1) << std::left << m_itemName  << " | " << std::right << std::setw(6) << std::setfill('0') << m_serialNum << " | " << std::setfill(' ');
       if (full) {
-         os << std::setw(4) << std::setfill('0') << m_availQty << " | " << m_desc;
+         os << std::setw(4) << m_availQty << " | " << m_desc;
       }
       os << std::endl;
    }
