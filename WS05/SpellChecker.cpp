@@ -16,7 +16,7 @@ namespace sdds {
       string str{};
 
       if (inf) {
-         for (int i = 0; i < 6; i++) {
+         for (int i = 0; i < ARR_SIZE; i++) {
             getline(inf, str);
             m_badWords[i] = str.substr(0, str.find_first_of(" \f\n\r\t\v"));
             m_goodWords[i] = str.substr(str.find_last_of(" \f\n\r\t\v") + 1);
@@ -34,7 +34,7 @@ namespace sdds {
    }
    void SpellChecker::operator()(std::string& text) {
       size_t pos{};
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < ARR_SIZE; i++) {
          do {
             pos = text.find(m_badWords[i]);
             if (pos != std::string::npos) {
@@ -46,7 +46,7 @@ namespace sdds {
    }
    void SpellChecker::showStatistics(std::ostream& out) const {
       cout << "Spellchecker Statistics" << endl;
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < ARR_SIZE; i++) {
          cout << setw(15) << right << m_badWords[i] << ": " << m_foundCnt[i] << " replacements" << endl;
       }
    }

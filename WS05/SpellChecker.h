@@ -12,10 +12,11 @@ Complete date: Feb 19, 2023
 #include <string>
 
 namespace sdds {
+   const int ARR_SIZE = 6;
    class SpellChecker {
-      std::string m_badWords[6]{};
-      std::string m_goodWords[6]{};
-      int m_foundCnt[6]{};
+      std::string m_badWords[ARR_SIZE]{};
+      std::string m_goodWords[ARR_SIZE]{};
+      int m_foundCnt[ARR_SIZE]{};
    public:
       SpellChecker();
       SpellChecker(const char* filename);
