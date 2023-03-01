@@ -25,23 +25,19 @@ namespace sdds {
       std::string result;
       std::string newStr = str.substr(next_pos);
       size_t delim_pos = newStr.find(m_delimiter);
-
       
       // b. if delim found, extract token accordingly
       if (delim_pos != std::string::npos) {
-         if (delim_pos == next_pos) {
+         if (newStr[delim_pos] == str[next_pos]) {
             more = false;
             throw "ERROR";
          }
          else {
             result = newStr.substr(0, delim_pos);
-
             //update next_pos with the position of the next token
             next_pos += result.length() + 1;
             more = true;
-
          }
-
       }
       else {
          result = newStr;
