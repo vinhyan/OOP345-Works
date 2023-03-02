@@ -35,7 +35,7 @@ namespace sdds {
       //get id
       getline(istr, tmp);
       trim(tmp);
-      if (tmp[0] == 'E') {
+      if (toupper(tmp[0]) == 'E') {
          m_id = tmp;
       }
       else {
@@ -60,7 +60,7 @@ namespace sdds {
    }
 
    void Employee::display(std::ostream& os) const {
-      os << "| " << left << setw(10) << "Employee" << "| " << setw(10) << m_id << "| " << setw(20) << m_name << " | " << setw(3) << m_age << " | \n";
+      os << "| " << left << setw(10) << "Employee" << "| " << setw(10) << m_id << "| " << setw(20) << m_name << " | " << setw(3) << m_age << " |\n";
    }
 
    Employee::~Employee() {}

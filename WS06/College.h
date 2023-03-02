@@ -8,6 +8,7 @@ Date complete:
 #ifndef SDDS_COLLEGE_H
 #define SDDS_COLLEGE_H
 #include <vector>
+#include <list>
 #include "Person.h"
 
 namespace sdds {
@@ -19,8 +20,14 @@ namespace sdds {
       College& operator=(const College& src) = delete;
       College& operator+=(Person* thePerson);
       void display(std::ostream& out) const;
-      ~College() {};
 
+      template<class T>
+      void select(const T& test, std::list<const Person*>& persons) {
+         for (auto it = m_persons.begin(); it != m_persons.end(); it++) {
+            if (test(*it)) persons.push_back(*it);
+         }
+      }
+      ~College();
    };
 
 }

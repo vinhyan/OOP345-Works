@@ -30,10 +30,15 @@ namespace sdds {
       out << "------------------------------------------------------------------------------------------------------------------------\n";
 
       for (auto it = m_persons.begin(); it != m_persons.end(); it++) {
-         out << "| " << std::left << std::setw(10) << (*it)->status() << "| " << std::setw(10) << (*it)->id() << "| " << std::setw(20) << (*it)->name() << " | " << std::setw(3) << (*it)->age() << " | \n";
+         out << "| " << std::left << std::setw(10) << (*it)->status() << "| " << std::setw(10) << (*it)->id() << "| " << std::setw(20) << (*it)->name() << " | " << std::setw(3) << (*it)->age() << " |\n";
       }
 
       out << "------------------------------------------------------------------------------------------------------------------------\n";
         
+   }
+   College::~College() {
+      for (auto it = m_persons.begin(); it != m_persons.end(); it++) {
+         delete *it;
+      }
    }
 }

@@ -9,6 +9,8 @@ Date complete:
 #include <sstream>
 #include "Utilities.h"
 #include "Employee.h"
+#include "Professor.h"
+#include "Student.h"
 
 using namespace std;
 namespace sdds {
@@ -18,10 +20,16 @@ namespace sdds {
 
       getline(in, tmp);
       stringstream ss(tmp);
+      char type = toupper(tmp[0]);
 
-      if (toupper(tmp[0]) == 'E') {
-
+      if (type == 'E') {
          person = new Employee(ss);
+      }
+      else if (type == 'P') {
+         person = new Professor(ss);
+      }
+      else if (type == 'S') {
+         person = new Student(ss);
       }
       else {
          person = nullptr;
