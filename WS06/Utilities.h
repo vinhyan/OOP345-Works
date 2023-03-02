@@ -2,7 +2,7 @@
 Name: Vinh Nhan
 Student ID: 171452212
 OOP345 Workshop 6
-Date complete:
+Date complete: Mar 2, 2023
 */
 
 #ifndef SDDS_UTILITIES_H

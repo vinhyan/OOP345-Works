@@ -2,7 +2,7 @@
 Name: Vinh Nhan
 Student ID: 171452212
 OOP345 Workshop 6
-Date complete:
+Date complete: Mar 2, 2023
 */
 
 #include <iomanip>
@@ -33,7 +33,14 @@ namespace sdds {
       }
 
       //get id
-      getline(istr, tmp);
+      //   check if this is an Employee or a Professor to determine delimiter
+      if (toupper(type[0]) == 'E') {
+         getline(istr, tmp);
+      }
+      else {
+         getline(istr, tmp, ',');
+      }
+
       trim(tmp);
       if (toupper(tmp[0]) == 'E') {
          m_id = tmp;
@@ -59,8 +66,16 @@ namespace sdds {
       return m_id;
    }
 
+   //Person* Employee::clone() const {
+   //   return new Employee(*this);
+   //}
+
    void Employee::display(std::ostream& os) const {
-      os << "| " << left << setw(10) << "Employee" << "| " << setw(10) << m_id << "| " << setw(20) << m_name << " | " << setw(3) << m_age << " |\n";
+      os << "| " << left << setw(10) 
+         << "Employee" << "| " << setw(10) 
+         << m_id << "| " << setw(20) 
+         << m_name << " | " << setw(3) 
+         << m_age << " |";
    }
 
    Employee::~Employee() {}

@@ -2,7 +2,7 @@
 Name: Vinh Nhan
 Student ID: 171452212
 OOP345 Workshop 6
-Date complete:
+Date complete: Mar 2, 2023
 */
 #include <iomanip>
 #include <sstream>
@@ -76,12 +76,21 @@ namespace sdds {
    std::string Student::id() const {
       return m_id;
    }
+   //int Student::courseCount() const {
+   //   return m_count;
+   //}
+   //Person* Student::clone() const {
+   //   return new Student(*this);
+   //}
    void Student::display(std::ostream& out) const {
       out << "| " << left << setw(10) << "Student" << "| " << setw(10) << m_id << "| " << setw(20) << m_name << " | " << setw(3) << m_age << " |";
       for (int i = 0; i < m_count; i++) {
-         out << m_courses[i] << (i != (m_count - 1) ? ", " : "\n");
+         out << m_courses[i] << (i != (m_count - 1) ? ", " : "");
       }
    }
+   //std::string* Student::courses() const {
+   //   return m_courses;
+   //}
    Student::~Student() {
       delete[] m_courses;
    }

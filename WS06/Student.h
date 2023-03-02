@@ -2,7 +2,7 @@
 Name: Vinh Nhan
 Student ID: 171452212
 OOP345 Workshop 6
-Date complete:
+Date complete: Mar 2, 2023
 */
 
 #ifndef SDDS_STUDENT_H
@@ -25,7 +25,10 @@ namespace sdds {
       std::string name() const;
       std::string age() const;
       std::string id() const;
+      //int courseCount() const;
+      //Person* clone() const;
       void display(std::ostream& out) const;
+      //std::string* courses() const;
       ~Student();
    };
 
