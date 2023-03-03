@@ -52,10 +52,4 @@ namespace sdds {
       str.erase(lastPos + 1);
       return str;
    }
-
-   void printCentre(const char* str, size_t lineLen, char fill) {
-      size_t numOfSpaces = ((lineLen - 2) - strlen(str)) / 2;
-      string wrapper(numOfSpaces, fill);
-      cout << "| " << wrapper << str << wrapper << " | " << endl;
-   }
 }

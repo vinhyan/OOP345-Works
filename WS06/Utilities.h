@@ -14,7 +14,6 @@ namespace sdds {
    Person* buildInstance(std::istream& in);
    std::string& trim(std::string& str);
    bool isNumberOnly(std::string& str);
-   void printCentre(const char* str, size_t lineLen, char fill);
 }
 
 
