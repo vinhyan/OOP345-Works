@@ -27,7 +27,7 @@ namespace sdds {
          m_age = tmp;
       }
       else {
-         throw m_name;
+         throw string(m_name + "++Invalid record!");
       }
 
       //get id
@@ -37,7 +37,7 @@ namespace sdds {
          m_id = tmp;
       }
       else {
-         throw m_name;
+         throw string(m_name + "++Invalid record!");
       }
 
       //get num of courses
@@ -47,7 +47,7 @@ namespace sdds {
          m_count = stoi(tmp);
       }
       else {
-         throw m_name;
+         throw string(m_name + "++Invalid record!");
       }
 
       m_courses = new string[m_count];

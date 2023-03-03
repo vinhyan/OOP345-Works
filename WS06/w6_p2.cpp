@@ -26,7 +26,7 @@ void loadData(const char* filename, sdds::College& theCollege)
 				theCollege += thePerson;
 		}
 		catch (std::string& err) {
-			std::cerr << err << "++Invalid record!\n";
+			std::cerr << err << std::endl;
 		}
 	}
 }
