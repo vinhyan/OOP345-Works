@@ -46,7 +46,7 @@ namespace sdds {
          m_id = tmp;
       }
       else {
-         throw m_name;
+         throw string(m_name + "++Invalid record!");
       }
    }
 
