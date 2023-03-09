@@ -66,10 +66,6 @@ namespace sdds {
       return m_id;
    }
 
-   //Person* Employee::clone() const {
-   //   return new Employee(*this);
-   //}
-
    void Employee::display(std::ostream& os) const {
       os << "| " << left << setw(10) 
          << "Employee" << "| " << setw(10) 
@@ -78,7 +74,6 @@ namespace sdds {
          << m_age << " |";
    }
 
-   Employee::~Employee() {}
 
   
 

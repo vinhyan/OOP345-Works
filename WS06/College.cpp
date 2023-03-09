@@ -39,20 +39,6 @@ namespace sdds {
              << (*it)->id() << "| " << std::setw(20) 
              << (*it)->name() << " | " << std::setw(3) 
              << (*it)->age() << " |\n";
-    /*     Person* clone = (*it)->clone();
-         if (clone->status() == "Professor") {
-            out << static_cast<Professor*>(clone)->department() << "|" 
-                << static_cast<Professor*>(clone)->status() << std::endl;
-         }
-         else if (clone->status() == "Student") {
-            int course_cnt = static_cast<Student*>(clone)->courseCount();
-            for (int i = 0; i < course_cnt; i++) {
-               out << static_cast<Student*>(clone)->courses()[i] << (i != (course_cnt - 1) ? ", " : "\n");
-            }
-         }
-         else {
-            std::cout << std::endl;
-         }*/
       }
 
       out << "------------------------------------------------------------------------------------------------------------------------\n";

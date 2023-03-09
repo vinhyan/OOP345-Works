@@ -20,9 +20,6 @@ namespace sdds {
       void display(std::ostream& out) const;
       std::string status() const;
       std::string department() const;
-      //Person* clone() const;
-
-
    };
 
 }

@@ -26,8 +26,5 @@ namespace sdds {
    std::string Professor::department() const {
       return m_department;
    }
-   //Person* Professor::clone() const {
-   //   return new Professor(*this);
-   //}
 }
 

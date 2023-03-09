@@ -19,14 +19,14 @@ namespace sdds {
       std::string m_age;
       std::string m_id;
    public:
+      Employee() {};
       Employee(std::istream& istr);
       std::string status() const;
       std::string name() const;
       std::string age() const;
       std::string id() const;
-      //Person* clone() const;
       void display(std::ostream&) const;
-      ~Employee();
+      virtual ~Employee() {};
    };
 
 
