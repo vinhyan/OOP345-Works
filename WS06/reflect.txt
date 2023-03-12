@@ -111,6 +111,46 @@ Employee::Employee(std::istream& istr) {
       }
    }
 
+Alternatively, we can create a member variable for each class Employee and Student (and possibly Professor if we need to validate department data). Let's call this variable of type bool m_valid. When extracting token, if any data does not meet the requirement we can toggle m_valid to false, or true otherwise. Then, we need to add a pure virtual function valid() to class Person, and also a function valid() in other concrete classes to check the valid state of the class. 
+//Person.h
+
+class Person {
+	...
+	virtual bool valid() = 0;
+
+}
+
+//Employee.cpp
+class Employee {
+	...
+	bool m_valid{};
+public:
+	...
+	bool valid() {
+		return m_valid;
+	}
+}
+
+Next, in loadData() in w6_p2.cpp, we would check the valid state of thePerson after extracting the data from buildInstance(). If it's in a valid state, we then append it to theCollege, otherwise, cout an error message to the screen.
+
+void loadData(const char* filename, sdds::College& theCollege)
+{
+	...
+	
+	while (file)
+	{
+		thePerson = sdds::buildInstance(file);
+			if (thePerson)
+				if (thePerson.valid()) {
+					theCollege += thePerson;
+				} else {
+					std::cout << "Invalid record" << std::endl;
+				}	
+	}
+}
+
+To conclude, it is not the most efficient way of catching errors; however, it can still be accomplished without having to use try - catch statement to catch exceptions.
+
 ***
 
 Let's assume m_persons is a vector of type Person, its members will be objects of type Person. Since Person is an abstract base class, attempting to make an object of this class will give compile error. For example, the oprator+= overload is responsible for adding a Person pointer to the vector, if m_persons is a vector of type Person, it needs to add an object of type Person to m_persons, which is not possible. Therefore, using std::list<sdds::Person> and std::vector<sdds::Person> will not be achievable. 
