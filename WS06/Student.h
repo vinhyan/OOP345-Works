@@ -29,6 +29,8 @@ namespace sdds {
       void display(std::ostream& out) const;
       Student& operator=(const Student& src) = delete;
       Student(const Student& src) = delete;
+      Student& operator=(Student&& src) noexcept;
+      Student(Student&& src) noexcept;
       virtual ~Student();
    };
 

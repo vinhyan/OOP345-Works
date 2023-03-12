@@ -84,6 +84,33 @@ namespace sdds {
          out << m_courses[i] << (i != (m_count - 1) ? ", " : "");
       }
    }
+   Student& Student::operator=(Student&& src) noexcept {
+      if (this != &src) {
+         //delete current data
+         delete[] m_courses;
+         m_courses = nullptr;
+
+         //shallow copy
+         m_name = src.m_name;
+         m_age = src.m_age;
+         m_id = src.m_id;
+         m_count = src.m_count;
+
+         //deep copy
+         m_courses = src.m_courses;
+
+         //delete src
+         src.m_name = "";
+         src.m_age = "";
+         src.m_id = "";
+         src.m_count = 0;
+         src.m_courses = nullptr;
+      }
+      return *this;
+   }
+   Student::Student(Student&& src) noexcept {
+      *this = std::move(src);
+   }
    Student::~Student() {
       delete[] m_courses;
    }
