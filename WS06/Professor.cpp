@@ -10,6 +10,7 @@ Date complete: Mar 2, 2023
 
 using namespace std;
 namespace sdds {
+   Professor::Professor() {}
    Professor::Professor(std::istream& in) : Employee(in) {
       string tmp{};
       getline(in, tmp, ',');
@@ -26,5 +27,6 @@ namespace sdds {
    std::string Professor::department() const {
       return m_department;
    }
+   Professor::~Professor() {}
 }
 

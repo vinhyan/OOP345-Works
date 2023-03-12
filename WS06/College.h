@@ -13,9 +13,9 @@ Date complete: Mar 2, 2023
 
 namespace sdds {
    class College {
-      std::vector<Person*> m_persons;
+      std::vector<Person*> m_persons{};
    public:
-      College() {};
+      College();
       College(const College& src) = delete;
       College& operator=(const College& src) = delete;
       College& operator+=(Person* thePerson);

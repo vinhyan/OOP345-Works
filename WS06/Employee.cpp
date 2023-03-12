@@ -12,7 +12,7 @@ Date complete: Mar 2, 2023
 
 using namespace std;
 namespace sdds {
-
+   Employee::Employee() {}
    Employee::Employee(std::istream& istr) {
       string tmp{};
       string type{};
@@ -29,7 +29,7 @@ namespace sdds {
          m_age = tmp;
       }
       else {
-         throw m_name;
+         throw string(m_name + "++Invalid record!");
       }
 
       //get id
@@ -74,7 +74,6 @@ namespace sdds {
          << m_age << " |";
    }
 
-
-  
+   Employee::~Employee() {}
 
 }

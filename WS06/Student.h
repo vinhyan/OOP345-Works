@@ -14,13 +14,13 @@ Date complete: Mar 2, 2023
 
 namespace sdds {
    class Student : public Person {
-      std::string m_name;
-      std::string m_age; 
-      std::string m_id;
-      std::string* m_courses;
-      int m_count;
+      std::string m_name{};
+      std::string m_age{};
+      std::string m_id{};
+      std::string* m_courses{};
+      int m_count{};
    public:
-      Student() {};
+      Student();
       Student(std::istream&);
       std::string status() const;
       std::string name() const;

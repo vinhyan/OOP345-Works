@@ -11,6 +11,7 @@ Date complete: Mar 2, 2023
 
 using namespace std;
 namespace sdds {
+   Student::Student() {}
    Student::Student(std::istream& istr) {
       string tmp{};
       string type{};

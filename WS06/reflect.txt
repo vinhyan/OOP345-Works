@@ -1,0 +1,120 @@
+****************************
+Student name: Vinh Nhan
+ID: 171452212
+Workshop 6 - Reflection
+****************************
+
+Class College and Person have a composition relationship, meaning College is responsible for the creation and destruction of Person. In class College, m_persons is a vector of pointer Person. 
+The class also overloads += operator to add a pointer to type Person to the vector m_persons
+
+class College {
+      std::vector<Person*> m_persons{};
+   public:
+      ...
+      College& operator+=(Person* thePerson) {
+		  m_persons.push_back(thePerson);
+		  return *this;
+		}
+   }
+
+Then, in w6_p2.cpp, a "person" is dynamically created via sdds::buidInstance(), which is then assigned to thePerson (pointer to type Person). If thePerson is not a nullptr, it will be added to the vector m_persons (class College) using operator+= overload. 
+
+//w6_p2.cpp
+sdds::Person* thePerson = nullptr;
+...
+
+thePerson = sdds::buildInstance(file);
+			if (thePerson)
+				theCollege += thePerson;
+
+//Utilities.cpp
+Person* buildInstance(std::istream& in) {
+      Person* person{};
+      string tmp{};
+
+      getline(in, tmp);
+      stringstream ss(tmp);
+      char type = toupper(tmp[0]);
+
+      if (type == 'E') {
+         person = new Employee(ss);  
+      }
+      else if (type == 'P') {
+         person = new Professor(ss);
+      }
+      else if (type == 'S') {
+         person = new Student(ss);
+      }
+      else {
+         person = nullptr;
+      }
+      return person;
+   }
+
+The buildInstance() dynamically creates and returns pointer to type Person , however it is a helper function and is not responsible for deleting the dynamically allocated memory.
+
+As a result, m_persons vector now contains dynamically allocated Person. And as a composer class, it will need to deallocate the memory of the component in the destructor to avoid memory leak.
+
+//College.cpp
+   College::~College() {
+      for (auto it = m_persons.begin(); it != m_persons.end(); it++) {
+         delete *it;
+      }
+   }
+
+***
+
+To detect what went wrong in loadData(), a try - catch statement is implemented to catch any exception thrown when extracting data from the file. Additionally, these exceptions are reported in the constructor of the relevant classes (i.e., Employee, Student, Professor) when extracting, specifically when the data is invalid. Once an exception is thrown, loadData() will catch and stop the rest of the logic from executing.
+
+void loadData(const char* filename, sdds::College& theCollege) {
+	...
+
+	try {
+			thePerson = sdds::buildInstance(file);
+			if (thePerson)
+				theCollege += thePerson;
+		}
+		catch (std::string& err) {
+			std::cerr << err << std::endl;
+		}
+}
+
+//Employee.cpp
+Employee::Employee(std::istream& istr) {
+      string tmp{};
+      string type{};
+	  
+	  ...
+	  
+      if (isNumberOnly(tmp)) {        
+         m_age = tmp;
+      }
+      else {
+         throw string(m_name + "++Invalid record!");   // *** Throw exception if age is not a number
+      }
+
+      //get id
+      //   check if this is an Employee or a Professor to determine delimiter
+      if (toupper(type[0]) == 'E') {
+         getline(istr, tmp);
+      }
+      else {
+         getline(istr, tmp, ',');
+      }
+
+      trim(tmp);
+      if (toupper(tmp[0]) == 'E') {
+         m_id = tmp;
+      }
+      else {
+         throw string(m_name + "++Invalid record!");  // *** Throw exception if id does not start with 'E'
+      }
+   }
+
+***
+
+Let's assume m_persons is a vector of type Person, its members will be objects of type Person. Since Person is an abstract base class, attempting to make an object of this class will give compile error. For example, the oprator+= overload is responsible for adding a Person pointer to the vector, if m_persons is a vector of type Person, it needs to add an object of type Person to m_persons, which is not possible. Therefore, using std::list<sdds::Person> and std::vector<sdds::Person> will not be achievable. 
+
+
+
+

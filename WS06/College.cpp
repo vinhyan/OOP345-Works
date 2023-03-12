@@ -13,6 +13,7 @@ Date complete: Mar 2, 2023
 
 
 namespace sdds {
+   College::College() {}
    College& College::operator+=(Person* thePerson) {
       m_persons.push_back(thePerson);
       return *this;

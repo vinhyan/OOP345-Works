@@ -14,12 +14,14 @@ Date complete: Mar 2, 2023
 
 namespace sdds {
    class Professor : public Employee {
-      std::string m_department;
+      std::string m_department{};
    public:
+      Professor();
       Professor(std::istream& in);
       void display(std::ostream& out) const;
       std::string status() const;
       std::string department() const;
+      virtual ~Professor();
    };
 
 }
