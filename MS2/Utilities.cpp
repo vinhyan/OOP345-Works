@@ -43,10 +43,13 @@ namespace sdds {
          result = newStr;
          more = false;
       }
+
+      if (m_widthField < result.length()) m_widthField = result.length();
+
       // c. trim spaces
       trim(result);
 
-      if (m_widthField < result.length()) m_widthField = result.length();
+      //if (m_widthField < result.length()) m_widthField = result.length();
 
       return result;
    }

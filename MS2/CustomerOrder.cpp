@@ -14,7 +14,7 @@ namespace sdds {
    size_t CustomerOrder::m_widthField = 1;
 
    CustomerOrder::CustomerOrder(const CustomerOrder& src) {
-      throw "ERROR! NOT ALLOWED";
+      throw "ERROR! NOT ALLOWED";  // *** is this correct?
    }
 
    CustomerOrder::CustomerOrder(CustomerOrder&& src) noexcept {
@@ -60,18 +60,18 @@ namespace sdds {
 
    bool CustomerOrder::isItemFilled(const std::string& itemName) const {    
       bool found = false;
-      bool isFilled = true;
+      bool filled = true;
       bool status = true;
-      for (auto i = 0u; i < m_cntItem && isFilled; i++) {  //exit loop immediately if a found item is NOT filled
+      for (auto i = 0u; i < m_cntItem && filled; i++) {  //exit loop immediately if a found item is NOT filled
          if (m_lstItem[i]->m_itemName == itemName) {
-            isFilled = m_lstItem[i]->m_isFilled;
+            filled = m_lstItem[i]->m_isFilled;
             found = true;
          }
       }
       //1. if nothing is found (found = false), status = true
       //2. if at least 1 item is found (found = true), but is NOT filled (isFilled = false), status = false
       //3. if item is found and is filled (found = true && isFilled = true), status = true
-      if (found && !isFilled) {
+      if (found && !filled) {
          status = false;
       }
       return status;
@@ -83,6 +83,7 @@ namespace sdds {
       for (; i < m_cntItem && !found; i++) {
          found = station.getItemName() == m_lstItem[i]->m_itemName;
       }
+      // *** try implementing found item using STL
 
       if (found && i--) {
          if (station.getQuantity() >= 1) {
@@ -101,8 +102,8 @@ namespace sdds {
       for (auto i = 0u; i < m_cntItem; i++) {
          os << "[" << std::setw(6) << std::setfill('0') 
             << m_lstItem[i]->m_serialNumber << "] " 
-            << std::setw(m_widthField) << std::setfill(' ') << std::left 
-            << m_lstItem[i]->m_itemName << "- "
+            << std::setw(m_widthField + 1) << std::setfill(' ') << std::left   //m_widthField 32 or 33
+            << m_lstItem[i]->m_itemName << " - "
             << (m_lstItem[i]->m_isFilled ? "FILLED" : "TO BE FILLED") << std::endl;
       }
    }
