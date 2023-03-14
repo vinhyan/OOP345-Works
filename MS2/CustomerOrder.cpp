@@ -79,7 +79,7 @@ namespace sdds {
 
    void CustomerOrder::fillItem(Station& station, std::ostream& os) const {
       bool found = false;
-      int i = 0;
+      auto i = 0u;
       for (; i < m_cntItem && !found; i++) {
          found = station.getItemName() == m_lstItem[i]->m_itemName;
       }
