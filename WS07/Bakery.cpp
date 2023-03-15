@@ -4,7 +4,7 @@ Student ID: 171452212
 Date complete: Mar 19, 2023
 Workshop 7
 */
-
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <iomanip>
@@ -12,6 +12,7 @@ Workshop 7
 #include <sstream>
 #include <algorithm>
 #include <numeric>
+#include <cstring>
 #include "Bakery.h"
 
 using namespace std;
