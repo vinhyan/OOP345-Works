@@ -4,6 +4,8 @@ Student ID: 171452212
 Date complete: Mar 19, 2023
 Workshop 7
 */
+
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -71,16 +73,16 @@ namespace sdds {
 
       sort(m_bakedGood.begin(), m_bakedGood.end(), [field](const BakedGood& bg1, const BakedGood& bg2) {
          bool result{};
-         if (field == "Description") {
+         if (!strcmp(field, "Description")) {
             result = bg1.m_desc < bg2.m_desc;
          }
-         else if (field == "Shelf") {
+         else if (!strcmp(field, "Shelf")) {
             result = bg1.m_shelfLife < bg2.m_shelfLife;
          }
-         else if (field == "Stock") {
+         else if (!strcmp(field, "Stock")) {
             result = bg1.m_stockQty < bg2.m_stockQty;
          }
-         else if (field == "Price") {
+         else if (!strcmp(field, "Price")) {
             result = bg1.m_price < bg2.m_price;
          }
          else {
