@@ -12,6 +12,7 @@ Workshop 7
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 
 
 namespace sdds {
@@ -34,10 +35,16 @@ namespace sdds {
    public:
       Bakery(const char* filename);
       void showGoods(std::ostream& os) const;
+      void sortBakery(const char* field);
+      std::vector<BakedGood> combine(const Bakery& B);
+      bool inStock(const char* desc, BakedType type) const;
+      std::list<BakedGood> outOfStock(const BakedType type) const;
+      
    };
 
    std::ostream& operator<<(std::ostream& out, const BakedGood& b);
 
+   std::string& trim(std::string& str);
 
 
 
