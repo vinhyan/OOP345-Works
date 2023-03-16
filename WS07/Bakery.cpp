@@ -136,7 +136,7 @@ namespace sdds {
          << setw(5)
          << b.m_stockQty << " * "
          << setw(8) << right << fixed << setprecision(2)
-         << b.m_price << " *";
+         << b.m_price << " * ";
        return out;
    }
 
