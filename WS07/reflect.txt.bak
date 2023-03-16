@@ -102,10 +102,3 @@ any_of(m_bakedGood.begin(), m_bakedGood.end(), [desc, type](const BakedGood& bg)
 As a result, using STL is proven to be much more efficient and less inclined to errors.
 
 3. for the sortBakery function, would anything differ in how it is implemented if the choice of collection was either a vector or a list? If there is a difference what is it?
-As my m_bakedGood is a vector, using STL algorithm sort() on vector is allowed. However, if the collection was a list, using STL sort() would not be possible because this function requires RandomAccessIterators to be passed to it and lists are not random access containers.
-*Template:
-void sort(RandomAccessIterator f, RandomAccessIterator l, Fn compare)
-
-That being said, lists do have its own sort() function which can be used to perform the same task of sorting. For instance:
-<list>m_bakedGood;
-m_bakedGood.sort(comparator);
