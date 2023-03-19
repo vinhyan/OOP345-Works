@@ -15,6 +15,8 @@ namespace sdds {
    size_t Station::m_widthField = 0;
    int Station::m_id_generator = 0;
 
+   Station::Station() {};
+
    Station::Station(const std::string& record) {
       Utilities util;
       size_t next_pos{};
@@ -42,11 +44,17 @@ namespace sdds {
       if (m_availQty > 0) m_availQty--;
    }
    void Station::display(std::ostream& os, bool full) const {
-      os << std::setfill('0') << std::setw(3)  << m_id << " | " << std::setfill(' ') << std::setw(m_widthField + 1) << std::left << m_itemName  << " | " << std::right << std::setw(6) << std::setfill('0') << m_serialNum << " | " << std::setfill(' ');
+      os << std::setfill('0') << std::setw(3)  
+         << m_id << " | " 
+         << std::setfill(' ') << std::setw(m_widthField + 1) << std::left 
+         << m_itemName  << " | " 
+         << std::right << std::setw(6) << std::setfill('0') 
+         << m_serialNum << " | " << std::setfill(' ');
       if (full) {
          os << std::setw(4) << m_availQty << " | " << m_desc;
       }
       os << std::endl;
    }
+   Station::~Station() {}
 }
 

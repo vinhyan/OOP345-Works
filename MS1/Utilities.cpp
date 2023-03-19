@@ -11,6 +11,8 @@
 namespace sdds {
    char Utilities::m_delimiter = ',';
 
+   Utilities::Utilities() {}
+
    void Utilities::setFieldWidth(size_t newWidth) {
       m_widthField = newWidth;
    }
@@ -30,7 +32,7 @@ namespace sdds {
       if (delim_pos != std::string::npos) {
          if (newStr[delim_pos] == str[next_pos]) {
             more = false;
-            throw "ERROR";
+            throw "ERROR! TOKEN CONTAINS DELIMITER";
          }
          else {
             result = newStr.substr(0, delim_pos);
@@ -58,6 +60,8 @@ namespace sdds {
    char Utilities::getDelimiter() {
       return m_delimiter;
    }
+
+   Utilities::~Utilities() {}
 
    void trim(std::string& str) {
       size_t firstPos = str.find_first_not_of(" \f\n\r\t\v");
