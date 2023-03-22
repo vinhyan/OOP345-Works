@@ -16,7 +16,7 @@ namespace sdds {
       Err_NotFound,
       Err_OutOfMemory,
    };
-   //singleton = only one instance of the class the whole program
+   //singleton = only one instance of the class is allowed for the whole program
    //class Database {
    //   static std::shared_ptr<Database> m_addr; //reflection
    //   size_t m_num_entry{};
@@ -49,13 +49,19 @@ namespace sdds {
 
          std::ifstream file(filename);
 
-         while (m_num_entry < ARR_SIZE && (file >> m_keys[m_num_entry] && file >> m_values[m_num_entry])) {
-            size_t pos = m_keys[m_num_entry].find_first_of("_");
+         size_t i{};
+
+         while (i < ARR_SIZE && (file >> m_keys[i] && file >> m_values[i])) {
+            size_t pos = m_keys[i].find_first_of("_");
+
             if (pos != std::string::npos) 
-               m_keys[m_num_entry].replace(pos, 1, " ");
-            encryptDecrypt(m_values[m_num_entry]);
-            m_num_entry++;
+               m_keys[i].replace(pos, 1, " ");
+
+            encryptDecrypt(m_values[i]);
+
+            i++;
          }
+         m_num_entry = i + 1;
       };
 
       void encryptDecrypt(T& value) {};
@@ -63,12 +69,10 @@ namespace sdds {
    public:
       static std::shared_ptr<Database> getInstance(const std::string& filename) {
          if (!m_addr) {
-            std::shared_ptr<Database> inst(new Database<T>(filename));
-            m_addr = inst; //shared pointer allows copy
+            m_addr = std::shared_ptr<Database> (new Database<T>(filename)); //shared pointer allows copy
          }
 
          return m_addr;
-
       }
       Err_Status GetValue(const std::string& key, T& value) const {
          bool found{};
@@ -87,7 +91,6 @@ namespace sdds {
          }
          return status;
 
-
       };
       Err_Status SetValue(const std::string& key, const T& value) {
          Err_Status status;
@@ -95,6 +98,7 @@ namespace sdds {
          if (m_num_entry < ARR_SIZE) {
             m_keys[m_num_entry - 1] = key;
             m_values[m_num_entry - 1] = value;
+            m_num_entry++;
             status = Err_Status::Err_Success;
          }
          else {
@@ -115,11 +119,8 @@ namespace sdds {
             for (auto i = 0u; i < m_num_entry; i++) {
                encryptDecrypt(m_values[i]);
                file << std::setw(25) << std::left << m_keys[i]
-                  << "-> " << m_values[i] << std::endl;
+                  << " -> " << m_values[i] << std::endl;
             }
-         }
-         else {
-            throw "Unable to open file!";
          }
 
       };
@@ -133,25 +134,25 @@ namespace sdds {
          for (const char& K : secret) {
             C = C ^ K;
          }
-
       }
    }
 
    template<>
    void Database<long long>::encryptDecrypt(long long& value) {
-      const char secret[]{ "secret encryption key" };
+      const char secret[]{ "super secret encryption key" };
 
      // value is a long long
       char* c = reinterpret_cast<char*>(&value);
 
-      for (auto i = 0u; i < sizeof(c); i++ )
-         for (const char& K : secret) {
-            c[i] = c[i] ^ K;
+      for (auto i = 0u; i < sizeof(value); i++) {
+         for (auto j = 0u; j < strlen(secret); j++) {
+            c[i] = c[i] ^ secret[j];
          }
+        /* for (const char& K : secret) {
+            c[i] = c[i] ^ K;
+         }*/
+      }
    }
-
-
-
 }
 
 
