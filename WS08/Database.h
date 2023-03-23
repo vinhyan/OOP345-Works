@@ -17,22 +17,7 @@ namespace sdds {
       Err_OutOfMemory,
    };
    //singleton = only one instance of the class is allowed for the whole program
-   //class Database {
-   //   static std::shared_ptr<Database> m_addr; //reflection
-   //   size_t m_num_entry{};
-   //   std::string m_keys[ARR_SIZE];
-   //   std::string m_values[ARR_SIZE];
-   //   std::string m_filename{};
-   ////protected: or private?
-   //   Database() {};
-   //   Database(const std::string& filename);
-   //public:
-   //   static std::shared_ptr<Database> getInstance(const std::string& filename);
-   //   Err_Status GetValue(const std::string& key, std::string& value) const;
-   //   Err_Status SetValue(const std::string& key, std::string& value);
-   //   ~Database();
 
-   //};
    template<class T>
    class Database {
       inline static std::shared_ptr<Database> m_addr{}; //reflection
@@ -61,7 +46,7 @@ namespace sdds {
 
             i++;
          }
-         m_num_entry = i + 1;
+         m_num_entry = i;
       };
 
       void encryptDecrypt(T& value) {};
@@ -74,6 +59,7 @@ namespace sdds {
 
          return m_addr;
       }
+
       Err_Status GetValue(const std::string& key, T& value) const {
          bool found{};
          Err_Status status;
@@ -92,12 +78,13 @@ namespace sdds {
          return status;
 
       };
+
       Err_Status SetValue(const std::string& key, const T& value) {
          Err_Status status;
 
          if (m_num_entry < ARR_SIZE) {
-            m_keys[m_num_entry - 1] = key;
-            m_values[m_num_entry - 1] = value;
+            m_keys[m_num_entry] = key;
+            m_values[m_num_entry] = value;
             m_num_entry++;
             status = Err_Status::Err_Success;
          }
@@ -107,8 +94,6 @@ namespace sdds {
 
          return status;
       };
-
-
 
       ~Database() {
          std::cout << "[" << this << "]" << " ~Database()" << std::endl;
@@ -122,9 +107,7 @@ namespace sdds {
                   << " -> " << m_values[i] << std::endl;
             }
          }
-
       };
-
    };
 
    template<>
@@ -145,12 +128,9 @@ namespace sdds {
       char* c = reinterpret_cast<char*>(&value);
 
       for (auto i = 0u; i < sizeof(value); i++) {
-         for (auto j = 0u; j < strlen(secret); j++) {
-            c[i] = c[i] ^ secret[j];
-         }
-        /* for (const char& K : secret) {
+         for (const char& K : secret) {
             c[i] = c[i] ^ K;
-         }*/
+         }
       }
    }
 }
