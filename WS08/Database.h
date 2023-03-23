@@ -20,33 +20,28 @@ namespace sdds {
 
    template<class T>
    class Database {
-      inline static std::shared_ptr<Database> m_addr{}; //reflection
+      inline static std::shared_ptr<Database> m_addr{};
       size_t m_num_entry{};
-      std::string m_keys[ARR_SIZE];
-      T m_values[ARR_SIZE];
+      std::string m_keys[ARR_SIZE]{};
+      T m_values[ARR_SIZE]{};
       std::string m_filename{};
-      //protected: or private?
       Database() {};
       Database(const std::string& filename) {
-            //hex style for the address
          std::cout << "[" << this << "]" << " Database(const std::string&)" << std::endl;
          m_filename = filename;
 
          std::ifstream file(filename);
 
-         size_t i{};
-
-         while (i < ARR_SIZE && (file >> m_keys[i] && file >> m_values[i])) {
-            size_t pos = m_keys[i].find_first_of("_");
+         while (m_num_entry < ARR_SIZE && (file >> m_keys[m_num_entry] && file >> m_values[m_num_entry])) {
+            size_t pos = m_keys[m_num_entry].find_first_of("_");
 
             if (pos != std::string::npos) 
-               m_keys[i].replace(pos, 1, " ");
+               m_keys[m_num_entry].replace(pos, 1, " ");
 
-            encryptDecrypt(m_values[i]);
+            encryptDecrypt(m_values[m_num_entry]);
 
-            i++;
+            m_num_entry++;
          }
-         m_num_entry = i;
       };
 
       void encryptDecrypt(T& value) {};
@@ -56,7 +51,6 @@ namespace sdds {
          if (!m_addr) {
             m_addr = std::shared_ptr<Database> (new Database<T>(filename)); //shared pointer allows copy
          }
-
          return m_addr;
       }
 
