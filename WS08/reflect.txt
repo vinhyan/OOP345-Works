@@ -1,0 +1,38 @@
+*****************************************
+Name: Vinh Nhan
+Student ID: 171452212
+OOP345 - Workshop 8 Reflection
+Date complete: Mar 26, 2023
+*****************************************
+
+
+1. why could we not use a unique_ptr in your Database class?
+Class Database is designed in a Singleton pattern, meaning only one instance of the class is allowed for the whole program. However, throughout the program, there are many occasions where we need to access the instance of the class. This requires the ability of sharing ownership amongst instances. And as unique_ptr has an exclusive ownership, it will not be able to accommodate such task. For example, the getInstance() returns the class member (m_addr) that holds the current address of the instance; this requires m_addr to be able to pass by value and unique_ptr cannot accomplish that as copy assignment is disabled (exclusive ownership).
+  static std::unique_ptr<Database> getInstance(const std::string& filename) {
+         if (!m_addr) {
+            m_addr = std::unique_ptr<Database> (new Database<T>(filename)); //shared pointer allows copy
+         }
+         return m_addr;   // ERROR 
+      }
+
+2. what changes you had to make in part 1 to transform the class into a templated one?
+To change class Database into a templated class, a class template paremeter is added. This parameter is the datatype for m_values. Additionally, since it is a class template, all function implementations will be done in the header file and there is no need for a .cpp file.
+
+3. a class that allows only one instance to be created is called a singleton. Can you think at another way to create a singleton without using static members? How would that object be managed?
+
+In this case, an anonymous class with one instance can be used throughout the program. This will satisfy the Singleton pattern of one-object allowed.
+
+
+4. the class Database has a resource attribute (the database instance), yet no copy/move operations were implemented. Is that a bug (justify your answer)?
+As class Database is implemented on a singleton pattern, it only allows one instance to be created for the entire program. Therefore, a copy/move assignment overload is not needed and is not a bug when they are not implemented.
+
+5. we said that the class Database can be instantied only once, yet in the output we see that the custom constructor is called twice (same for the destructor). Explain.
+The reason of why the customer constructor is called twice is because there are two different instances of class Database of 2 different types. One instance is of type string (db1) and the other is of type long long (db2). Additionally, any attempt to create another instance of these 2 types (db3 for type string and db4 for type long long) will be unsuccessful because the getInstance() will return the original instances, assuming db1 and db2 were the first instances to be created. Therefore, db1 shares the same address as db3, the same as with db2 and db4.
+
+		void* db1 = sdds::Database<std::string>::getInstance(argv[1]).get();
+		void* db2 = sdds::Database<long long>::getInstance(argv[2]).get();
+		void* db3 = sdds::Database<std::string>::getInstance("nothing").get(); //returns address of db1
+		void* db4 = sdds::Database<long long>::getInstance("nothing").get(); //returns address of db2
+
+		std::cout << (db1 == db3 ? "Same" : "Different") << " database.\n";   // Same
+		std::cout << (db2 == db4 ? "Same" : "Different") << " database.\n";   // Same
