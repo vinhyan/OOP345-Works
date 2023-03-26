@@ -21,12 +21,14 @@ namespace sdds {
       static size_t m_widthField;
       static int m_id_generator;
    public:
+      Station();
       Station(const std::string& record);
       const std::string& getItemName() const;
       size_t getNextSerialNumber();
       size_t getQuantity() const;
       void updateQuantity();
       void display(std::ostream& os, bool full) const;
+      ~Station();
       
 
    };

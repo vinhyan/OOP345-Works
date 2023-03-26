@@ -15,6 +15,8 @@ namespace sdds {
    size_t Station::m_widthField = 0;
    int Station::m_id_generator = 0;
 
+   Station::Station(){}
+
    Station::Station(const std::string& record) {
       Utilities util;
       size_t next_pos{};
@@ -52,5 +54,6 @@ namespace sdds {
       }
       os << std::endl;
    }
+   Station::~Station() {}
 }
 
