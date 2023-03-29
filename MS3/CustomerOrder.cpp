@@ -1,7 +1,7 @@
 // Name: Vinh Nhan
 // Seneca Student ID: 171452212
 // Seneca email: vnhan1@myseneca.ca
-// Date of completion: Mar 2, 2023
+// Date of completion: Apr 8, 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -14,7 +14,7 @@ namespace sdds {
    size_t CustomerOrder::m_widthField = 1;
 
    CustomerOrder::CustomerOrder(const CustomerOrder& src) {
-      throw "ERROR! NOT ALLOWED";  // *** is this correct?
+      throw "ERROR! NOT ALLOWED"; 
    }
 
    CustomerOrder::CustomerOrder(CustomerOrder&& src) noexcept {
