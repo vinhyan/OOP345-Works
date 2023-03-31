@@ -19,9 +19,10 @@ namespace sdds {
       Workstation* m_firstStation{};
    public:
       LineManager();
-      LineManager(const std::string& file, const std::vector<Workstation*>& stations);
+      LineManager(const std::string& file, const std::vector<Workstation*>& stations);bool cont = true;
       void reorderStations();
       void display(std::ostream& os) const;
+      bool run(std::ostream& os);
 
 
 

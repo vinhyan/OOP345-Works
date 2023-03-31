@@ -57,12 +57,6 @@ namespace sdds {
                   stn_cnt++;
                }
             }
-            //identify first and last station from the file to figure out the order of the station
-
-            //loop thru station vector and sort according to the order
-
-            //THROW EXCEPTION
-               //what if there are 2 last stations (2 that are not next to any station)
          }
 
          bool found{};
@@ -79,33 +73,77 @@ namespace sdds {
             } 
          }
       }
+
+      m_cntCustomerOrder = g_pending.size();
+      //THROW EXCEPTION
+         //what if there are 2 last stations (2 that are not next to any station)
    }
 
    void LineManager::reorderStations() {
-      size_t cnt{};
-      bool cont = true;
-      vector<Workstation*> reorderedStns{};
-      reorderedStns.push_back(m_firstStation);
-      //reorderedStns.push_back(m_firstStation->getNextStation());
+      vector<Workstation*> reorderedStns;
 
-      for (auto it = m_activeLine.begin(); it != m_activeLine.end() && cont; it++) {
-         if (reorderedStns[cnt]->getNextStation()->getItemName() == (*it)->getItemName()) {
-            reorderedStns.push_back(*it);
-            cnt++;
-            cont = false;
-         }
-         
+      Workstation* ws = m_firstStation;
+
+      while (ws != nullptr) {
+         reorderedStns.push_back(ws);
+         ws = ws->getNextStation();
       }
 
+      m_activeLine = reorderedStns;
    }
 
    void LineManager::display(std::ostream& os) const {
       for (auto it = m_activeLine.begin(); it != m_activeLine.end(); it++) {
          (*it)->display(os);
       }
-      //os << "first station: ";
-      //m_firstStation->display(os);
-      //os << std::endl;
+   }
+
+   bool LineManager::run(std::ostream& os) {
+      static size_t cnt = 1;
+      bool status{};
+      bool isMoved{true};
+      CustomerOrder* order = &(g_pending.front());
+      os << "Line Manager Iteration: " << cnt++ << endl;
+
+      *m_firstStation += (move(*order));
+
+      g_pending.pop_front();
+
+      //first loop, order has not been moved, therefore nothing gets filled
+      for (auto it = m_activeLine.begin(); it != m_activeLine.end() ; it++) {
+         (*it)->fill(os);
+      }
+      //move order, so the next loop can fill
+      auto i = 0u;
+      for (; i < m_activeLine.size(); i++) {
+         isMoved = m_activeLine[i]->attemptToMoveOrder();
+      }
+
+ 
+
+   /*   vector<size_t> filled_idx{};
+      for (auto i = 0u; i < m_activeLine.size(); i++) {
+         m_activeLine[i]->fill(os);
+      }*/
+
+
+
+
+      //if (cnt == 3) m_activeLine[4]->attemptToMoveOrder();
+      //it++;
+      //for (; it != m_activeLine.end() && isMoved; it++) {
+      //   isMoved = (*it)->attemptToMoveOrder();
+      //}
+      /*if (!isMoved) {
+         
+      }*/
+
+
+      g_pending.size() > 0 ? status = false : status = true;
+  
+
+
+      return status;
    }
 
 }
