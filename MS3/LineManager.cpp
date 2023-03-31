@@ -75,6 +75,7 @@ namespace sdds {
       }
 
       m_cntCustomerOrder = g_pending.size();
+
       //THROW EXCEPTION
          //what if there are 2 last stations (2 that are not next to any station)
    }
@@ -101,46 +102,24 @@ namespace sdds {
    bool LineManager::run(std::ostream& os) {
       static size_t cnt = 1;
       bool status{};
-      bool isMoved{true};
-      CustomerOrder* order = &(g_pending.front());
+
       os << "Line Manager Iteration: " << cnt++ << endl;
 
-      *m_firstStation += (move(*order));
+      if (g_pending.size() > 0) {
+         *m_firstStation += (move(g_pending.front()));
+         g_pending.pop_front();
+      }
 
-      g_pending.pop_front();
-
-      //first loop, order has not been moved, therefore nothing gets filled
+      //first call first loop, order has not been moved, therefore nothing gets filled
       for (auto it = m_activeLine.begin(); it != m_activeLine.end() ; it++) {
          (*it)->fill(os);
       }
-      //move order, so the next loop can fill
-      auto i = 0u;
-      for (; i < m_activeLine.size(); i++) {
-         isMoved = m_activeLine[i]->attemptToMoveOrder();
-      }
-
- 
-
-   /*   vector<size_t> filled_idx{};
+      //move orders, so the next call can fill
       for (auto i = 0u; i < m_activeLine.size(); i++) {
-         m_activeLine[i]->fill(os);
-      }*/
-
-
-
-
-      //if (cnt == 3) m_activeLine[4]->attemptToMoveOrder();
-      //it++;
-      //for (; it != m_activeLine.end() && isMoved; it++) {
-      //   isMoved = (*it)->attemptToMoveOrder();
-      //}
-      /*if (!isMoved) {
-         
-      }*/
-
-
-      g_pending.size() > 0 ? status = false : status = true;
-  
+         (m_activeLine[i]->attemptToMoveOrder());
+      }
+   
+      (g_completed.size() + g_incomplete.size() == m_cntCustomerOrder ? status = true : status = false);
 
 
       return status;

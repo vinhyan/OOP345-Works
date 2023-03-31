@@ -79,15 +79,24 @@ namespace sdds {
 
    void CustomerOrder::fillItem(Station& station, std::ostream& os) const {
       bool found = false;
+      bool filled = true;
       auto i = 0u;
-      for (; i < m_cntItem && !found; i++) {
-         found = station.getItemName() == m_lstItem[i]->m_itemName;
+      //for (; i < m_cntItem && !found && filled; i++) {
+      //   found = station.getItemName() == m_lstItem[i]->m_itemName;
+      //}
+
+      for (; i < m_cntItem && filled; i++) {
+         if (station.getItemName() == m_lstItem[i]->m_itemName) {
+            filled = m_lstItem[i]->m_isFilled;
+            found = true;
+         };
       }
       // *** try implementing found item using STL
 
-      if (found && i--) {
+      //isItemFilled(station.getItemName())
+      if (found && !filled && i--) {
          if (!m_lstItem[i]->m_isFilled) {
-            if (station.getQuantity() >= 1) {
+            if (station.getQuantity() > 0) {
                m_lstItem[i]->m_isFilled = true;
                m_lstItem[i]->m_serialNumber = station.getNextSerialNumber();
                station.updateQuantity();
