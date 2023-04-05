@@ -78,39 +78,32 @@ namespace sdds {
    }
 
    void CustomerOrder::fillItem(Station& station, std::ostream& os) const {
-      bool found = false;
       bool filled = true;
       auto i = 0u;
-      //for (; i < m_cntItem && !found && filled; i++) {
-      //   found = station.getItemName() == m_lstItem[i]->m_itemName;
-      //}
+      bool stop = false;
 
-      for (; i < m_cntItem && filled; i++) {
+      for (; i < m_cntItem && !stop; i++) {
          if (station.getItemName() == m_lstItem[i]->m_itemName) {
             filled = m_lstItem[i]->m_isFilled;
-            found = true;
+            
+            if (!filled) {
+               if (station.getQuantity() > 0) {
+                  m_lstItem[i]->m_isFilled = true;
+                  m_lstItem[i]->m_serialNumber = station.getNextSerialNumber();
+                  station.updateQuantity();
+
+                  os << "    Filled " << m_name << ", "
+                     << m_product << " [" << m_lstItem[i]->m_itemName << "]\n";
+                  stop = true;
+               }
+               else {
+                  os << "    Unable to fill " << m_name << ", "
+                     << m_product << " [" << m_lstItem[i]->m_itemName << "]\n";
+
+               }
+            }
          };
-      }
-      // *** try implementing found item using STL
-
-      //isItemFilled(station.getItemName())
-      if (found && !filled && i--) {
-         if (!m_lstItem[i]->m_isFilled) {
-            if (station.getQuantity() > 0) {
-               m_lstItem[i]->m_isFilled = true;
-               m_lstItem[i]->m_serialNumber = station.getNextSerialNumber();
-               station.updateQuantity();
-
-               os << "    Filled " << m_name << ", "
-                  << m_product << " [" << m_lstItem[i]->m_itemName << "]\n";
-            }
-            else {
-               os << "    Unable to fill " << m_name << ", "
-                  << m_product << " [" << m_lstItem[i]->m_itemName << "]\n";
-
-            }
-         }
-      }
+      }   
    }
 
    void CustomerOrder::display(std::ostream& os) const {

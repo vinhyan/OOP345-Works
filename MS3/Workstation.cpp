@@ -71,7 +71,7 @@ namespace sdds {
    }
 
    void Workstation::display(std::ostream& os) const {
-      os << Station::getItemName() << " --> " << (m_pNextStation ? m_pNextStation->getItemName() : "End of line") << endl;
+      os << Station::getItemName() << " --> " << (m_pNextStation ? m_pNextStation->getItemName() : "End of Line") << endl;
 
    }
 
