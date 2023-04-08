@@ -26,7 +26,6 @@ namespace sdds {
       util.setDelimiter('|');
 
       vector<string> not_first_stns{};
-      size_t stn_cnt{};
 
       if (inf) {
          while (getline(inf, str)) {
