@@ -1,0 +1,9 @@
+*******************************************
+Student name: Vinh Nhan
+Student ID: 171452212
+Date complete: Apr 8, 2023
+Milestone Project - Reflection
+*******************************************
+
+
+Through this course, I have learned a lot in depth about object oriented program using c++. I consider this course of c++ is the toughest, given the new concepts and the amount of workshops and MS projects we had to do. However, I really appreciate Hong for spending his time explaining the lectures, workshops, supplementary videos and tests walkthrough in detail, making it a lot easier for the students to finish them. And also thank you for being very approachable and always replying messages via Teams when I and my peers needed help! :)
