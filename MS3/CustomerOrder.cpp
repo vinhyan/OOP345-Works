@@ -109,7 +109,7 @@ namespace sdds {
    void CustomerOrder::display(std::ostream& os) const {
       os << m_name << " - " << m_product << std::endl;
       for (auto i = 0u; i < m_cntItem; i++) {
-         os << "[" << std::setw(6) << std::setfill('0') 
+         os << "[" << std::setw(6) << std::right << std::setfill('0') 
             << m_lstItem[i]->m_serialNumber << "] " 
             << std::setw(m_widthField) << std::setfill(' ') << std::left   //m_widthField 31
             << m_lstItem[i]->m_itemName << " - "
