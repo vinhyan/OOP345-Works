@@ -39,7 +39,7 @@ namespace sdds {
       Workstation* getNextStation() const;
       void display(std::ostream& os) const;
       Workstation& operator+=(CustomerOrder&& newOrder);
-      ~Workstation();
+      virtual ~Workstation() {};
    };
 
 

@@ -80,11 +80,6 @@ namespace sdds {
       return *this;
    }
 
-   Workstation::~Workstation() {}
-
-
-
-
 
 
 
